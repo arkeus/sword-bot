@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bot>
+	<nick>SwordBot</nick>
+	<password>password here</password>
+	<server>irc.freenode.net</server>
+	<channel>#swordbot</channel>
+	<verbose>true</verbose>
+	<login>SwordBot</login>
+	<prefix>;</prefix>
+	<directory>C:\Dev\Workspace\SwordBot</directory>
+	<administrators>
+		<user>Arkeus</user>
+	</administrators>
+</bot>
