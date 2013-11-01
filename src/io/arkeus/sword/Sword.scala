@@ -7,10 +7,9 @@ import org.jibble.pircbot.NickAlreadyInUseException
 import io.arkeus.sword.user.Users
 import org.jibble.pircbot.DccChat
 import io.arkeus.sword.chat.ChatHandler
+import io.arkeus.sword.util.Logger
 
-class Sword(val config:Config) extends PircBot {
-	val logger = LogManager.getLogger(this.getClass)
-	
+class Sword(val config:Config) extends PircBot with Logger {
 	def initialize = {
 		logger.info(s"Connecting to ${config.server}")
 		
