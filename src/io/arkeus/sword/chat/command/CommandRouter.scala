@@ -6,20 +6,19 @@ import io.arkeus.sword.util.Logger
 import io.arkeus.sword.chat.command.router.Router
 import io.arkeus.sword.chat.command.impl.User
 
-object CommandMap extends Logger {
-	val commands = Map(
-		"user" -> UserCommand
-	)
-	
+object CommandRouter extends Logger {
 	val router = new Router(List(
 		("user $name:String", User.Profile),
 		("user", User.Self)
 	))
 	
-	def execute(user:SwordUser, message:Message) = {
-		commands.get(message.command) match {
-			case Some(command) => command.execute(user, message)
-			case None => logger.info(s"User $user used invalid command '$message.command'")
+	def execute(user:SwordUser, message:String, router:Router = router) = {
+		val route = router.route(message)
+		if (route != null) {
+			val parameters = route.parameterize(message)
+			route.command.execute(user, parameters)
+		} else {
+			user.send(s"Unknown command '$message', type 'help' for help.")
 		}
 	}
 }

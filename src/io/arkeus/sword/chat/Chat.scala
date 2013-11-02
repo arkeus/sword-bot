@@ -1,14 +1,12 @@
 package io.arkeus.sword.chat
 
+import java.io.IOException
 import org.jibble.pircbot.DccChat
 import scala.actors.Actor
-import java.io.IOException
 import scala.collection.Iterator
+import io.arkeus.sword.chat.command.CommandRouter
 import io.arkeus.sword.user.Users
-import org.apache.logging.log4j.LogManager
-import scala.util.Random
 import io.arkeus.sword.util.Logger
-import io.arkeus.sword.chat.command.CommandMap
 
 class Chat(val chat:DccChat) extends Actor with Logger {
 	val user = Users.find(chat.getNick())
@@ -31,7 +29,7 @@ class Chat(val chat:DccChat) extends Actor with Logger {
 	
 	private def processLine(line:String) = {
 		try {
-			CommandMap.execute(user, new Message(line))
+			CommandRouter.execute(user, line)
 		} catch {
 			case exception:Throwable => logger.error(s"Error with line '$line' from user '$user'", exception)
 		}
