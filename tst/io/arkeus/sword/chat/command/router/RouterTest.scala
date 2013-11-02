@@ -48,14 +48,14 @@ class RouterTest extends BaseTest {
 	}
 	
 	object TestBuyCommand extends Command {
-		override def execute(user:SwordUser, params:Parameters):Any = {
-			return params
+		override def execute(user:SwordUser, params:Parameters) = {
+			params
 		}
 	}
 	
 	object TestProfileCommand extends Command {
-		override def execute(user:SwordUser, params:Parameters):Any = {
-			return params
+		override def execute(user:SwordUser, params:Parameters) = {
+			params
 		}
 	}
 }

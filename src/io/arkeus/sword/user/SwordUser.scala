@@ -10,6 +10,7 @@ import io.arkeus.sword.util.Logger
 class SwordUser(val name:String) extends Logger {
 	var chat:DccChat = null
 	
+	var stats = new Statistics
 	var experience = new Experience
 	var equipment = new Equipment
 	
@@ -25,7 +26,14 @@ class SwordUser(val name:String) extends Logger {
 		}
 	}
 	
-	override def toString:String = {
-		return s"$name (Level ${experience.level} - ${experience.current}/${experience.max})"
+	override def toString = {
+		s"$name (Level ${experience.level} - ${experience.current}/${experience.max})"
+	}
+	
+	def profile = {
+		s"""
+		$name (Level ${experience.level} - ${experience.current}/${experience.max})
+		
+		"""
 	}
 }

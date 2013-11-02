@@ -10,5 +10,6 @@ object Users extends scala.collection.mutable.HashMap[String, SwordUser] {
 		return user
 	}
 	
+	def exists(name:String) = contains(normalize(name))
 	def normalize(name:String) = name.toLowerCase()
 }
