@@ -15,7 +15,7 @@ class NodeTest {
 		assertThat(node.matches("cow "), is(false))
 		assertThat(node.matches(" cow"), is(false))
 	}
-	
+
 	@Test
 	def variableNodeStringTest = {
 		val node = new VariableNode("$name:String")
@@ -25,7 +25,7 @@ class NodeTest {
 		assertThat(node.matches(""), is(true))
 		assertThat(node.matches("multiple tokens I guess"), is(true))
 	}
-	
+
 	@Test
 	def variableNodeIntTest = {
 		val node = new VariableNode("$age:Int")

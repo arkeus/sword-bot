@@ -6,10 +6,10 @@ import scala.collection.mutable.ListBuffer
 import io.arkeus.sword.chat.command.router.RouteHelper._
 import io.arkeus.sword.user.SwordUser
 
-class Router(val routeList:List[_ <: (String, Command)]) {
+class Router(val routeList: List[_ <: (String, Command)]) {
 	val routes = build
-	
-	def route(path:String):Route = {
+
+	def route(path: String): Route = {
 		routes.get(path.alias) match {
 			case Some(list) => {
 				val sortedRoutes = list.filter(_.matches(path)).sortWith(_.score > _.score)
@@ -18,8 +18,8 @@ class Router(val routeList:List[_ <: (String, Command)]) {
 			case None => null
 		}
 	}
-	
-	def build:HashMap[String, ListBuffer[Route]] = {
+
+	def build: HashMap[String, ListBuffer[Route]] = {
 		val map = new HashMap[String, ListBuffer[Route]]
 		for (route <- routeList) {
 			val path = route._1

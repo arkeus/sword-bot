@@ -11,8 +11,8 @@ object CommandRouter extends Logger {
 		("user $name:String", User.Profile),
 		("user", User.Self)
 	))
-	
-	def execute(user:SwordUser, message:String, router:Router = router) = {
+
+	def execute(user: SwordUser, message: String, router: Router = router) = {
 		val route = router.route(message)
 		if (route != null) {
 			val parameters = route.parameterize(message)

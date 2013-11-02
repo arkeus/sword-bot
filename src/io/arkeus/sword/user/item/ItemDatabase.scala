@@ -10,7 +10,7 @@ object ItemDatabase {
 		new Weapon("Spire Blade", 4, Element.Earth),
 		new Weapon("Gust Blade", 4, Element.Air)
 	)
-	
+
 	object Fists extends Weapon("Fists", 0)
 	object Skin extends Armor("Skin", 0)
 	object Hand extends Shield("Hand", 0)

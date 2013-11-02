@@ -1,5 +1,5 @@
 package io.arkeus.sword.user.item
 
-class Item(val name:String, val level:Int) {
-	
+class Item(val name: String, val level: Int) {
+
 }
