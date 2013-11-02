@@ -13,5 +13,5 @@ class Experience(var level: Int = 1, var current: Int = 0, var experienceFormula
 		}
 	}
 
-	private def defaultExperienceFormula(level: Int): Int = (100 + 10 * level + Math.pow(level, 1.1)).toInt
+	private def defaultExperienceFormula(level: Int): Int = (100 + 10 * (level - 1) + Math.pow(level - 1, 1.1)).toInt
 }

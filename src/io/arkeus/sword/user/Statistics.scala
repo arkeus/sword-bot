@@ -7,4 +7,6 @@ class Statistics {
 	var agility: Int = 10
 	var stamina: Int = 10
 	var spirit: Int = 10
+	
+	override def toString = s"STR $strength | DEF $defense | WIS $wisdom | AGI $agility | STA $stamina | SPI $spirit"
 }

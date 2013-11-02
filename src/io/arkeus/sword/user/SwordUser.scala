@@ -10,6 +10,7 @@ import io.arkeus.sword.util.Logger
 class SwordUser(val name: String) extends Logger {
 	var chat: DccChat = null
 
+	var gold = 0
 	var stats = new Statistics
 	var experience = new Experience
 	var equipment = new Equipment
@@ -30,10 +31,15 @@ class SwordUser(val name: String) extends Logger {
 		s"$name (Level ${experience.level} - ${experience.current}/${experience.max})"
 	}
 
-	def profile = {
-		s"""
-		$name (Level ${experience.level} - ${experience.current}/${experience.max})
+	def profile(self: Boolean) = {
+		val basicInfo = s"[$name] [Level ${experience.level} - ${experience.current}/${experience.max}]"
+		val financeInfo = s"[Gold $gold]"
+		val statInfo = s"[$stats]"
 		
-		"""
+		if (self) {
+			s"$basicInfo $financeInfo $statInfo"
+		} else {
+			s"$basicInfo"
+		}
 	}
 }

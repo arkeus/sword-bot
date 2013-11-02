@@ -9,7 +9,7 @@ import io.arkeus.sword.user.Users
 object User {
 	object Self extends Command {
 		override def execute(user:SwordUser, params:Parameters) = {
-			user.send("Self profile")
+			user.send(user.profile(true))
 		}
 	}
 	
@@ -17,7 +17,7 @@ object User {
 		override def execute(user:SwordUser, params:Parameters) = {
 			val username = params.string("name")
 			if (Users.exists(username)) {
-				user.send(Users.find(username).profile)
+				user.send(Users.find(username).profile(false))
 			} else {
 				user.send(s"Could not find user $username")
 			}

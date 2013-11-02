@@ -18,7 +18,7 @@ class Route(routeInfo: (String, Command)) {
 	val score = calculateScore
 
 	def matches(path: String): Boolean = {
-		val tokens = path.split(" ")
+		val tokens = path.tokenize
 		var i = 0
 		for (node <- nodes) {
 			if (tokens.length <= i || !node.matches(tokens(i))) {
@@ -30,7 +30,7 @@ class Route(routeInfo: (String, Command)) {
 	}
 
 	def parameterize(path: String): Parameters = {
-		val tokens = path.split(" ")
+		val tokens = path.tokenize
 		val params = new HashMap[String, Any]
 		for (nodeInfo <- nodes.zip(tokens)) {
 			if (nodeInfo._1.isInstanceOf[VariableNode]) {
@@ -49,7 +49,7 @@ class Route(routeInfo: (String, Command)) {
 
 	private def build(path: String): ListBuffer[RouteNode] = {
 		val list = ListBuffer[RouteNode]()
-		var pathNodes = path.split(" ").toList
+		var pathNodes = path.tokenize.toList
 
 		for (pathNode <- pathNodes) {
 			list += createRouteNode(pathNode)
