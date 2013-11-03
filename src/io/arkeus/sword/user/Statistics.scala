@@ -1,12 +1,18 @@
 package io.arkeus.sword.user
 
+import scala.collection.mutable.HashMap
+
 class Statistics {
-	var strength: Int = 10
-	var defense: Int = 10
-	var wisdom: Int = 10
-	var agility: Int = 10
-	var stamina: Int = 10
-	var spirit: Int = 10
+	val stats = HashMap() ++ Statistic.names.map(name => (name, 10)).toMap
 	
-	override def toString = s"''STR'' $strength | ''DEF'' $defense | ''WIS'' $wisdom | ''AGI'' $agility | ''STA'' $stamina | ''SPI'' $spirit"
+	def get(stat:String) = stats.get(stat).orElse(Some(0)).get
+	def set(stat:String, value:Int) = stats.put(stat, value)
+	
+	override def toString = Statistic.names.map(name => s"''${Statistic.shorten(name)}'' ${stats(name)}").mkString(" | ")
+}
+
+object Statistic {
+	val names = List("strength", "defense", "wisdom", "agility", "stamina", "spirit")
+	
+	def shorten(name:String) = name.substring(0, 3).toUpperCase()
 }

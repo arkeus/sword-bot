@@ -1,4 +1,4 @@
-package io.arkeus.sword.user.item
+package io.arkeus.sword.data
 
 object Element extends Enumeration {
 	type Element = Value

@@ -1,5 +1,7 @@
 package io.arkeus.sword.user.item
 
+import io.arkeus.sword.data.Element
+
 object ItemDatabase {
 	val Weapons = Array(
 		new Weapon("Short Sword", 1),

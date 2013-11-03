@@ -49,7 +49,7 @@ object CommandRouter extends Logger {
 
 	def execute(user: SwordUser, message: String, router: Router = router) = {
 		val route = router.route(message)
-		if (route.alias == "stop" || user.idle) {
+		if (route == null || route.alias == "stop" || user == null || user.idle) {
 			if (route != null) {
 				val parameters = route.parameterize(message)
 				route.command.execute(user, parameters)

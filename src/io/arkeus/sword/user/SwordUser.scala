@@ -18,8 +18,9 @@ import io.arkeus.sword.activity.BattleActivity
 import io.arkeus.sword.activity.BattleActivity
 import io.arkeus.sword.activity.BattleActivity
 import io.arkeus.sword.activity.battle.Area
+import io.arkeus.sword.activity.battle.Fightable
 
-class SwordUser(val name: String) extends Logger {
+class SwordUser(val name: String) extends Logger with Fightable {
 	var chat: Chat = null
 	var activity: Activity = null
 
@@ -39,8 +40,10 @@ class SwordUser(val name: String) extends Logger {
 		removedItem
 	}
 
+	def stat(stat:String) = stats.get(stat)
 	def damage = equipment.weapon.damage
 	def armor = equipment.armor.armor + equipment.shield.armor
+	def element = equipment.weapon.element
 
 	def send(message: String) = {
 		if (chat != null) {
