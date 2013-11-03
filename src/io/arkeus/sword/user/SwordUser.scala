@@ -10,9 +10,17 @@ import io.arkeus.sword.user.UserHelper._
 import io.arkeus.sword.user.message.Colorizer
 import io.arkeus.sword.user.item.Inventory
 import io.arkeus.sword.chat.Chat
+import io.arkeus.sword.activity.Stop
+import io.arkeus.sword.activity.Activity
+import io.arkeus.sword.activity.BattleActivity
+import io.arkeus.sword.activity.BattleActivity
+import io.arkeus.sword.activity.BattleActivity
+import io.arkeus.sword.activity.BattleActivity
+import io.arkeus.sword.activity.BattleActivity
 
 class SwordUser(val name: String) extends Logger {
 	var chat: Chat = null
+	var activity: Activity = null
 
 	var gold = 0
 	var stats = new Statistics
@@ -53,6 +61,17 @@ class SwordUser(val name: String) extends Logger {
 			s"$basicInfo"
 		}
 	}
+	
+	def battle = start[BattleActivity]
+	
+	def start[T <: Activity]()(implicit manifest: Manifest[T]) = {
+		if (activity == null) {
+			activity = manifest.erasure.getDeclaredConstructor(classOf[SwordUser]).newInstance(this).asInstanceOf[T]
+			activity.start
+		}
+	}
+	
+	def stop = if (activity != null) activity ! Stop
 	
 	def open(dccChat: DccChat) = {
 		logger.info(s"Initiating chat with $name")
