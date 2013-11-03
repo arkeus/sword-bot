@@ -17,6 +17,8 @@ object InventoryCommands {
 				user.send(s"[Inventory ${user.inventory.size} items] Use ''inventory ID'' to inspect an item.\n$inventory")
 			}
 		}
+		
+		override def help = "Displays all items in your inventory"
 	}
 
 	object Inspect extends Command {
@@ -30,6 +32,8 @@ object InventoryCommands {
 				user.send(messages.mkString("\n"))
 			}
 		}
+		
+		override def help = "Displays in depth information about a single item in your inventory"
 	}
 	
 	object Equipped extends Command {
@@ -39,6 +43,8 @@ object InventoryCommands {
 			user.send("[Shield] " + (if (user.equipment.hasShield) user.equipment.shield else s"None (${user.equipment.shield})"))
 			user.send(" [Armor] " + (if (user.equipment.hasArmor) user.equipment.armor else s"None (${user.equipment.armor})"))
 		}
+		
+		override def help = "Displays your equipped items"
 	}
 	
 	object InspectEquipment extends Command {
@@ -56,6 +62,8 @@ object InventoryCommands {
 				user.send(messages.mkString("\n"))
 			}
 		}
+		
+		override def help = "Displays in depth information about a single equipped item, $slot should be one of ''weapon'', ''shield'', or ''armor''"
 	}
 	
 	object Equip extends Command {
@@ -72,9 +80,11 @@ object InventoryCommands {
 				user.send(s"Equipped {''$item''}")
 			}
 		}
+		
+		override def help = "Equips an item from your inventory"
 	}
 
-	object Debug extends Command {
+	object Debug extends Command(true) {
 		override def execute(user: SwordUser, params: Parameters) = {
 			user.inventory.add(ItemDatabase.Weapons(1))
 		}

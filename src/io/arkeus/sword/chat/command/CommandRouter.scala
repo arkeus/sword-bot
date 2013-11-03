@@ -9,6 +9,7 @@ import io.arkeus.sword.chat.command.impl.InventoryCommands
 import io.arkeus.sword.chat.command.impl.UselessCommands
 import io.arkeus.sword.chat.command.impl.BattleCommands
 import io.arkeus.sword.chat.command.impl.ActivityCommands
+import io.arkeus.sword.chat.command.impl.HelpCommands
 
 object CommandRouter extends Logger {
 	val router = new Router(List(
@@ -28,11 +29,23 @@ object CommandRouter extends Logger {
 		("battle $area:Int", null),
 		// Activity
 		("stop", ActivityCommands.Stop),
+		// Help
+		("help", HelpCommands.Help),
 		// Useless
 		("look $direction:String", UselessCommands.Look),
-		// Let me end list with a , please
-		("_", null)
+		// Debug
+		("quit", UselessCommands.Quit)
 	))
+	
+	def aliases = router.aliases
+	
+	def routes(alias: String = null) = {
+		if (alias == null) {
+			router.all
+		} else {
+			router.where(alias)
+		}
+	}
 
 	def execute(user: SwordUser, message: String, router: Router = router) = {
 		val route = router.route(message)

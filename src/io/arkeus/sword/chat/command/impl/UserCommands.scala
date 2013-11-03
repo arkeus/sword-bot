@@ -11,6 +11,8 @@ object UserCommands {
 		override def execute(user: SwordUser, params: Parameters) = {
 			user.send(user.profile(true))
 		}
+		
+		override def help = "Views information about your character"
 	}
 
 	object Profile extends Command {
@@ -22,5 +24,7 @@ object UserCommands {
 				user.send(s"Could not find user $username")
 			}
 		}
+		
+		override def help = "Views general information about another user's character"
 	}
 }
