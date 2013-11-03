@@ -5,8 +5,8 @@ import org.jibble.pircbot.Colors
 object Colorizer {
 	val bracketedColors = Array(Colors.RED, Colors.OLIVE, Colors.GREEN, Colors.DARK_GREEN, Colors.BLUE, Colors.DARK_BLUE)
 	var bracketOffset = 0
-	
-	def colorize(message:String) = {
+
+	def colorize(message: String) = {
 		//"""\[(.*?)\]""".r.findAllIn(message).map(colorizeBrackets).mkString(" ")
 		var coloredMessage = message
 		for (brackets <- """\[(.*?)\]""".r.findAllIn(message)) {
@@ -14,8 +14,8 @@ object Colorizer {
 		}
 		formatTags(coloredMessage)
 	}
-	
-	def colorizeBrackets(message:String, brackets:String) = {
+
+	def colorizeBrackets(message: String, brackets: String) = {
 		val color = bracketedColors(bracketOffset % bracketedColors.length)
 		bracketOffset += 1
 		val inner = brackets.substring(1, brackets.length - 1)
@@ -26,6 +26,6 @@ object Colorizer {
 		val coloredBrackets = Colors.BOLD + color + "[" + Colors.NORMAL + Colors.BOLD + alias + Colors.BOLD + rest + Colors.BOLD + color + "]" + Colors.NORMAL
 		message.replace(brackets, coloredBrackets)
 	}
-	
-	def formatTags(message:String) = message.replaceAll("""''(.*?)''""", Colors.BOLD + "$1" + Colors.BOLD)
+
+	def formatTags(message: String) = message.replaceAll("""''(.*?)''""", Colors.BOLD + "$1" + Colors.BOLD)
 }

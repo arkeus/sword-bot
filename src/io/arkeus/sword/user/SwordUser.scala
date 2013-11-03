@@ -29,9 +29,7 @@ class SwordUser(val name: String) extends Logger {
 		}
 	}
 
-	override def toString = {
-		s"$name (Level ${experience.level} - ${experience.current}/${experience.max})"
-	}
+	override def toString = name
 
 	def profile(self: Boolean) = {
 		val basicInfo = s"[$name] [Level ${experience.level} - ${experience.current}/${experience.max}]"
