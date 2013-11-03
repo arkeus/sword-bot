@@ -26,6 +26,7 @@ class Chat(val chat: DccChat, val user: SwordUser) extends Actor with Logger {
 
 	private def processLine(line: String) = {
 		try {
+			user.save
 			CommandRouter.execute(user, line)
 		} catch {
 			case exception: Throwable => logger.error(s"Error with line '$line' from user '$user'", exception)

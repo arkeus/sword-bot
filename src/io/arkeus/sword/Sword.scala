@@ -15,6 +15,9 @@ class Sword(val config: Config) extends PircBot with Logger {
 		logger.info("Priming databases")
 		prime
 		
+		logger.info("Initializing data")
+		SwordData.initialize(config)
+		
 		logger.info(s"Connecting to ${config.server}")
 
 		setLogin(config.login)

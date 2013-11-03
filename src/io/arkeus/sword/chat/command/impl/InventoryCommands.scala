@@ -86,7 +86,7 @@ object InventoryCommands {
 
 	object Debug extends Command(true) {
 		override def execute(user: SwordUser, params: Parameters) = {
-			user.inventory.add(ItemDatabase.Weapons(1))
+			user.inventory.add(ItemDatabase.byName("Long Sword").get)
 		}
 	}
 }

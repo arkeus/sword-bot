@@ -30,7 +30,9 @@ class Equipment {
 	def hasShield = shieldItem match { case Some(_) => true case None => false }
 	def hasArmor = armorItem match { case Some(_) => true case None => false }
 
-	def weapon = weaponItem.getOrElse(ItemDatabase.Fists)
-	def shield = shieldItem.getOrElse(ItemDatabase.Hand)
-	def armor = armorItem.getOrElse(ItemDatabase.Skin)
+	def weapon = weaponItem.getOrElse(ItemDatabase.byName("Fists").get.asInstanceOf[Weapon])
+	def shield = shieldItem.getOrElse(ItemDatabase.byName("Hand").get.asInstanceOf[Shield])
+	def armor = armorItem.getOrElse(ItemDatabase.byName("Skin").get.asInstanceOf[Armor])
+	
+	def serialize = List(weapon.serialize, shield.serialize, armor.serialize)
 }

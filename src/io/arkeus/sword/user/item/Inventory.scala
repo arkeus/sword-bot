@@ -19,4 +19,6 @@ class Inventory {
 
 	def size = items.length
 	def empty = size == 0
+	
+	def serialize = items.map(_.serialize).toList
 }

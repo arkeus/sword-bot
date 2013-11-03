@@ -10,5 +10,5 @@ class Config(
 	var verbose: Boolean = false,
 	var login: String = null,
 	var prefix: String = null,
-	var root: File = null,
+	var dataDirectory: String = null,
 	var administrators: Set[String] = null)

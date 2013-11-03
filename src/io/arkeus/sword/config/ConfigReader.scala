@@ -27,7 +27,7 @@ class ConfigReader(val configFile: File) {
 		config.verbose = getBoolean("verbose", false)
 		config.login = getString("login", "SwordBot")
 		config.prefix = getString("prefix", ";")
-		//config.root = new File(getString("directory", null))
+		config.dataDirectory = getString("dataDirectory", "data")
 		config.administrators = Set[String]()
 
 		return config

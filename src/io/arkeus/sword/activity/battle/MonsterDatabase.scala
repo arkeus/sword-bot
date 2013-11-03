@@ -6,14 +6,15 @@ import io.arkeus.sword.util.Database
 import io.arkeus.sword.data.Element
 import io.arkeus.sword.user.item.Weapon
 import io.arkeus.sword.user.item.ItemDatabase
+import io.arkeus.sword.user.item.Item
 
 object MonsterDatabase extends Database[Monster] {	
-	def build(list: List[(String, Int, Weapon)]) = {
+	def build(list: List[(String, Int, Option[Item])]) = {
 		var id = 1
 		for (info <- list) {
 			val name = info._1
 			val level = info._2
-			val weapon = info._3
+			val weapon = info._3.get.asInstanceOf[Weapon]
 			val monster = new Monster(id, name, level, weapon)
 			ids += monster
 			names.put(name, monster)
@@ -23,9 +24,9 @@ object MonsterDatabase extends Database[Monster] {
 	
 	build(List(
 		// Fields
-		("Baby Earth Slime", 1, ItemDatabase.Claws),
-		("Small River Rat", 1, ItemDatabase.Claws),
-		("Baby Fire Slime", 1, ItemDatabase.Claws),
-		("Young Hawk", 2, ItemDatabase.Claws)
+		("Baby Earth Slime", 1, ItemDatabase.byName("Claws")),
+		("Small River Rat", 1, ItemDatabase.byName("Claws")),
+		("Baby Fire Slime", 1, ItemDatabase.byName("Claws")),
+		("Young Hawk", 2, ItemDatabase.byName("Claws"))
 	))
 }

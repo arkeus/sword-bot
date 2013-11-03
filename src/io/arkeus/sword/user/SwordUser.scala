@@ -19,6 +19,8 @@ import io.arkeus.sword.activity.BattleActivity
 import io.arkeus.sword.activity.BattleActivity
 import io.arkeus.sword.activity.battle.Area
 import io.arkeus.sword.activity.battle.Fightable
+import com.twitter.json.Json
+import io.arkeus.sword.SwordData
 
 class SwordUser(val name: String) extends Logger with Fightable {
 	var chat: Chat = null
@@ -96,6 +98,20 @@ class SwordUser(val name: String) extends Logger with Fightable {
 	def close = {
 		chat.close
 		chat = null
+	}
+	
+	def save = SwordData.saveUser(this)
+	
+	def serialize = {
+		Json.build(Map(
+			"name" -> name,
+			"gold" -> gold,
+			"stats" -> stats.stats,
+			"level" -> experience.level,
+			"experience" -> experience.current,
+			"inventory" -> inventory.serialize,
+			"equipment" -> equipment.serialize
+		)).toString
 	}
 
 	implicit class FormattedMessage(message: String) {

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Example config file for running SwordBot -->
 <bot>
 	<nick>SwordBot</nick>
 	<password>password here</password>
@@ -7,7 +8,7 @@
 	<verbose>true</verbose>
 	<login>SwordBot</login>
 	<prefix>;</prefix>
-	<directory>C:\Dev\Workspace\SwordBot</directory>
+	<dataDirectory>C:\Dev\Workspace\Scala\SwordBot\data</dataDirectory>
 	<administrators>
 		<user>Arkeus</user>
 	</administrators>
