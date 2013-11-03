@@ -5,12 +5,16 @@ import io.arkeus.sword.chat.Message
 import io.arkeus.sword.util.Logger
 import io.arkeus.sword.chat.command.router.Router
 import io.arkeus.sword.chat.command.impl.UserCommands
+import io.arkeus.sword.chat.command.impl.InventoryCommands
 
 object CommandRouter extends Logger {
 	val router = new Router(List(
 		// User
 		("user $name:String", UserCommands.Profile),
 		("user", UserCommands.Self),
+		// Inventory
+		("inventory", InventoryCommands.Show),
+		("inventory gimme", InventoryCommands.Debug),
 		// Battle
 		("battle", null),
 		("battle $area:Int", null),

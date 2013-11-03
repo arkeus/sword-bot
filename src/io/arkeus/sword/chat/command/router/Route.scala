@@ -1,6 +1,6 @@
 package io.arkeus.sword.chat.command.router
 
-import io.arkeus.sword.chat.command.impl.User
+import io.arkeus.sword.chat.command.impl.UserCommands
 import io.arkeus.sword.chat.command.Command
 import io.arkeus.sword.chat.command.router.node.RouteNode
 import scala.collection.mutable.ListBuffer

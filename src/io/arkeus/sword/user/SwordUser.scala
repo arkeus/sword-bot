@@ -8,6 +8,7 @@ import org.jibble.pircbot.DccChat
 import io.arkeus.sword.util.Logger
 import io.arkeus.sword.user.UserHelper._
 import io.arkeus.sword.user.message.Colorizer
+import io.arkeus.sword.user.item.Inventory
 
 class SwordUser(val name: String) extends Logger {
 	var chat: DccChat = null
@@ -16,6 +17,7 @@ class SwordUser(val name: String) extends Logger {
 	var stats = new Statistics
 	var experience = new Experience
 	var equipment = new Equipment
+	var inventory = new Inventory
 
 	def equip(item: Item) = equipment.equip(item)
 	def damage = equipment.weapon.damage
