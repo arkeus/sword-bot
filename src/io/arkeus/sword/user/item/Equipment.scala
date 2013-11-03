@@ -7,12 +7,28 @@ class Equipment {
 
 	def equip(item: Item) = {
 		item match {
-			case _: Weapon => weaponItem = Option(item.asInstanceOf[Weapon])
-			case _: Shield => shieldItem = Option(item.asInstanceOf[Shield])
-			case _: Armor => armorItem = Option(item.asInstanceOf[Armor])
+			case _: Weapon => {
+				val equipped = weaponItem
+				weaponItem = Option(item.asInstanceOf[Weapon])
+				equipped
+			}
+			case _: Shield => {
+				val equipped = shieldItem
+				shieldItem = Option(item.asInstanceOf[Shield])
+				equipped
+			}
+			case _: Armor => {
+				val equipped = armorItem
+				armorItem = Option(item.asInstanceOf[Armor])
+				equipped
+			}
 			case _ => throw new IllegalArgumentException("Unknown item type: ${item.getClass.getName}")
 		}
 	}
+	
+	def hasWeapon = weaponItem match { case Some(_) => true case None => false }
+	def hasShield = shieldItem match { case Some(_) => true case None => false }
+	def hasArmor = armorItem match { case Some(_) => true case None => false }
 
 	def weapon = weaponItem.getOrElse(ItemDatabase.Fists)
 	def shield = shieldItem.getOrElse(ItemDatabase.Hand)

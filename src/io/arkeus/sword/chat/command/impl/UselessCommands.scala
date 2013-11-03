@@ -10,7 +10,7 @@ object UselessCommands {
 		override def execute(user: SwordUser, params: Parameters) = {
 			val direction = params.string("direction").toLowerCase()
 			if (List("west", "east", "south", "north", "left", "right", "up", "down", "back", "forward", "around").contains(direction)) {
-				user.send(s"You look $direction but don't see anything of interest...")
+				user.send(s"You look ''$direction'' but don't see anything of interest...")
 			} else {
 				user.send("You don't know how to look that way!")
 			}

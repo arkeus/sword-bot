@@ -5,26 +5,22 @@ import org.jibble.pircbot.DccChat
 import scala.actors.Actor
 import scala.collection.Iterator
 import io.arkeus.sword.chat.command.CommandRouter
-import io.arkeus.sword.user.Users
+import io.arkeus.sword.user.SwordUser
 import io.arkeus.sword.util.Logger
 
-class Chat(val chat: DccChat) extends Actor with Logger {
-	val user = Users.find(chat.getNick())
-
+class Chat(val chat: DccChat, val user: SwordUser) extends Actor with Logger {
+	def accept = chat.accept
+	def close = chat.close
+	def send(message:String) = chat.sendLine(message)
+	
 	override def act() = {
 		try {
-			logger.info(s"Initiating chat with ${user.name}")
-			chat.accept()
-			user.chat = chat
-
-			user.send("Welcome to {Sword Bot}, home of the {Sword Bot}, can I take your order?")
 			Iterator.continually(chat.readLine).takeWhile(_ != null).foreach(processLine(_))
 		} catch {
 			case _: IOException => println("OH NO IO EXCEPTION CALL THE KHALEESI")
 		} finally {
 			logger.info(s"Completing chat with ${user.name}")
-			user.chat = null
-			chat.close()
+			user.close
 		}
 	}
 

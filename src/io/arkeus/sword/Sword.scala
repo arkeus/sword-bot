@@ -6,7 +6,6 @@ import io.arkeus.sword.config.Config
 import org.jibble.pircbot.NickAlreadyInUseException
 import io.arkeus.sword.user.Users
 import org.jibble.pircbot.DccChat
-import io.arkeus.sword.chat.ChatHandler
 import io.arkeus.sword.util.Logger
 
 class Sword(val config: Config) extends PircBot with Logger {
@@ -41,6 +40,6 @@ class Sword(val config: Config) extends PircBot with Logger {
 	}
 
 	override protected def onIncomingChatRequest(chat: DccChat) = {
-		ChatHandler.accept(chat)
+		Users.find(chat.getNick()).open(chat)
 	}
 }

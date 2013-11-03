@@ -7,7 +7,6 @@ object Colorizer {
 	var bracketOffset = 0
 
 	def colorize(message: String) = {
-		//"""\[(.*?)\]""".r.findAllIn(message).map(colorizeBrackets).mkString(" ")
 		var coloredMessage = message
 		for (brackets <- """\[(.*?)\]""".r.findAllIn(message)) {
 			coloredMessage = colorizeBrackets(coloredMessage, brackets)

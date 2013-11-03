@@ -9,9 +9,10 @@ import io.arkeus.sword.util.Logger
 import io.arkeus.sword.user.UserHelper._
 import io.arkeus.sword.user.message.Colorizer
 import io.arkeus.sword.user.item.Inventory
+import io.arkeus.sword.chat.Chat
 
 class SwordUser(val name: String) extends Logger {
-	var chat: DccChat = null
+	var chat: Chat = null
 
 	var gold = 0
 	var stats = new Statistics
@@ -19,13 +20,21 @@ class SwordUser(val name: String) extends Logger {
 	var equipment = new Equipment
 	var inventory = new Inventory
 
-	def equip(item: Item) = equipment.equip(item)
+	def equip(item: Item) = {
+		val removedItem = equipment.equip(item) match {
+			case Some(unequipped) => inventory.add(unequipped); unequipped
+			case None => null
+		}
+		inventory.remove(item)
+		removedItem
+	}
+	
 	def damage = equipment.weapon.damage
 	def armor = equipment.armor.armor + equipment.shield.armor
 
 	def send(message: String) = {
 		if (chat != null) {
-			chat.sendLine(message.colorize)
+			chat.send(message.colorize)
 		} else {
 			logger.warn(s"Attempted to send message to $this but no chat was open")
 		}
@@ -43,6 +52,19 @@ class SwordUser(val name: String) extends Logger {
 		} else {
 			s"$basicInfo"
 		}
+	}
+	
+	def open(dccChat: DccChat) = {
+		logger.info(s"Initiating chat with $name")
+		chat = new Chat(dccChat, this)
+		chat.accept
+		chat.start
+		send("Welcome to {Sword Bot}, home of the {Sword Bot}, can I take your order?")
+	}
+	
+	def close = {
+		chat.close
+		chat = null
 	}
 	
 	implicit class FormattedMessage(message:String) {
