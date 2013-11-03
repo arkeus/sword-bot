@@ -1,8 +1,11 @@
 package io.arkeus.sword.activity
 
 import io.arkeus.sword.user.SwordUser
+import io.arkeus.sword.activity.battle.Area
 
-class BattleActivity(user:SwordUser) extends Activity(user) {
+class BattleActivity(user:SwordUser, args:List[Any]) extends Activity(user, args) {
+	val area: Area = args(0).asInstanceOf[Area]
+	
 	override def tick = {
 		state match {
 			case Waiting => {

@@ -5,30 +5,35 @@ import io.arkeus.sword.util.Logger
 import scala.actors.TIMEOUT
 import io.arkeus.sword.user.SwordUser
 
-abstract class Activity(val user:SwordUser) extends Actor with Logger {
-	var state:ActivityState = Waiting
-	
+abstract class Activity(val user: SwordUser, val args: List[Any]) extends Actor with Logger {
+	var state: ActivityState = Waiting
+
 	override def act = {
 		initialize
 		loop {
 			reactWithin(tickLength) {
-				case Stop => destroy; exit
+				case Stop => destroy; close
 				case TIMEOUT => tick
 			}
 		}
 	}
-	
+
 	def tickLength = 500
-	
+
 	// Called every $tickLength time, override with activity behavior
-	def tick():Unit
-	
+	def tick(): Unit
+
 	// Override to get initialization logic
-	def initialize():Unit = {}
-	
+	def initialize(): Unit = {}
+
 	// Override to get destructor logic
-	def destroy():Unit = {}
+	def destroy(): Unit = {}
 	
+	def close = {
+		user.finishActivity
+		exit
+	}
+
 	class ActivityState
 	case object Waiting extends ActivityState
 }

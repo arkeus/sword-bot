@@ -17,6 +17,7 @@ import io.arkeus.sword.activity.BattleActivity
 import io.arkeus.sword.activity.BattleActivity
 import io.arkeus.sword.activity.BattleActivity
 import io.arkeus.sword.activity.BattleActivity
+import io.arkeus.sword.activity.battle.Area
 
 class SwordUser(val name: String) extends Logger {
 	var chat: Chat = null
@@ -63,16 +64,18 @@ class SwordUser(val name: String) extends Logger {
 		}
 	}
 
-	def battle = start[BattleActivity]
+	def battle(area:Area) = start[BattleActivity](List(area))
 
-	def start[T <: Activity]()(implicit manifest: Manifest[T]) = {
+	def start[T <: Activity](args: List[Any])(implicit manifest: Manifest[T]) = {
 		if (activity == null) {
-			activity = manifest.erasure.getDeclaredConstructor(classOf[SwordUser]).newInstance(this).asInstanceOf[T]
+			activity = manifest.erasure.getDeclaredConstructor(classOf[SwordUser], classOf[List[Any]]).newInstance(this, args).asInstanceOf[T]
 			activity.start
 		}
 	}
 
 	def stop = if (activity != null) activity ! Stop
+	def finishActivity = activity = null
+	def idle = activity == null
 
 	def open(dccChat: DccChat) = {
 		logger.info(s"Initiating chat with $name")

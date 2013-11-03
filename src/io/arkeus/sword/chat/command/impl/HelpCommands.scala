@@ -16,7 +16,7 @@ object HelpCommands {
 				routeHelp(user, route)
 			}
 		}
-		
+
 		private def basicHelp(user: SwordUser) = {
 			val aliases = CommandRouter.aliases.mkString(" ")
 			user.send("{''The Automated Sword Bot Automated Help Automator''}")
@@ -24,7 +24,7 @@ object HelpCommands {
 			user.send("Use ''help $category'' to get information about a category of commands.")
 			user.send(s"Available command categories: $aliases")
 		}
-		
+
 		private def routeHelp(user: SwordUser, routeString: String) = {
 			val alias = routeString.alias
 			val routes = CommandRouter.routes(alias)
@@ -36,7 +36,7 @@ object HelpCommands {
 				}
 			}
 		}
-		
+
 		override def help = "Displays the help prompt"
 	}
 }

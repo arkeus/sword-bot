@@ -25,8 +25,8 @@ object CommandRouter extends Logger {
 		("equipped", InventoryCommands.Equipped),
 		("equip $id:Int", InventoryCommands.Equip),
 		// Battle
-		("battle", BattleCommands.Test),
-		("battle $area:Int", null),
+		("battle $area:Int", BattleCommands.Battle),
+		("battle", BattleCommands.Areas),
 		// Activity
 		("stop", ActivityCommands.Stop),
 		// Help
@@ -49,11 +49,13 @@ object CommandRouter extends Logger {
 
 	def execute(user: SwordUser, message: String, router: Router = router) = {
 		val route = router.route(message)
-		if (route != null) {
-			val parameters = route.parameterize(message)
-			route.command.execute(user, parameters)
-		} else {
-			user.send(s"Unknown command ''$message'', type ''help'' for help.")
+		if (route.alias == "stop" || user.idle) {
+			if (route != null) {
+				val parameters = route.parameterize(message)
+				route.command.execute(user, parameters)
+			} else {
+				user.send(s"Unknown command ''$message'', type ''help'' for help.")
+			}
 		}
 	}
 }
