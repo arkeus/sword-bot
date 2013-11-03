@@ -6,6 +6,8 @@ import io.arkeus.sword.user.item.Armor
 import io.arkeus.sword.user.item.Item
 import org.jibble.pircbot.DccChat
 import io.arkeus.sword.util.Logger
+import io.arkeus.sword.user.UserHelper._
+import io.arkeus.sword.user.message.Colorizer
 
 class SwordUser(val name: String) extends Logger {
 	var chat: DccChat = null
@@ -21,7 +23,7 @@ class SwordUser(val name: String) extends Logger {
 
 	def send(message: String) = {
 		if (chat != null) {
-			chat.sendLine(message)
+			chat.sendLine(message.colorize)
 		} else {
 			logger.warn(s"Attempted to send message to $this but no chat was open")
 		}
@@ -34,12 +36,16 @@ class SwordUser(val name: String) extends Logger {
 	def profile(self: Boolean) = {
 		val basicInfo = s"[$name] [Level ${experience.level} - ${experience.current}/${experience.max}]"
 		val financeInfo = s"[Gold $gold]"
-		val statInfo = s"[$stats]"
+		val statInfo = s"[STATS $stats]"
 		
 		if (self) {
 			s"$basicInfo $financeInfo $statInfo"
 		} else {
 			s"$basicInfo"
 		}
+	}
+	
+	implicit class FormattedMessage(message:String) {
+		implicit def colorize = Colorizer.colorize(message)
 	}
 }

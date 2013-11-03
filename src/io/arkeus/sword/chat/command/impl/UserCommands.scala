@@ -6,7 +6,7 @@ import io.arkeus.sword.chat.Message
 import io.arkeus.sword.chat.command.router.Parameters
 import io.arkeus.sword.user.Users
 
-object User {
+object UserCommands {
 	object Self extends Command {
 		override def execute(user:SwordUser, params:Parameters) = {
 			user.send(user.profile(true))

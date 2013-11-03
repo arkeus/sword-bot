@@ -4,12 +4,18 @@ import io.arkeus.sword.user.SwordUser
 import io.arkeus.sword.chat.Message
 import io.arkeus.sword.util.Logger
 import io.arkeus.sword.chat.command.router.Router
-import io.arkeus.sword.chat.command.impl.User
+import io.arkeus.sword.chat.command.impl.UserCommands
 
 object CommandRouter extends Logger {
 	val router = new Router(List(
-		("user $name:String", User.Profile),
-		("user", User.Self)
+		// User
+		("user $name:String", UserCommands.Profile),
+		("user", UserCommands.Self),
+		// Battle
+		("battle", null),
+		("battle $area:Int", null),
+		// Let me end list with a , please
+		("_", null)
 	))
 
 	def execute(user: SwordUser, message: String, router: Router = router) = {
@@ -18,7 +24,7 @@ object CommandRouter extends Logger {
 			val parameters = route.parameterize(message)
 			route.command.execute(user, parameters)
 		} else {
-			user.send(s"Unknown command '$message', type 'help' for help.")
+			user.send(s"Unknown command ''$message'', type ''help'' for help.")
 		}
 	}
 }
