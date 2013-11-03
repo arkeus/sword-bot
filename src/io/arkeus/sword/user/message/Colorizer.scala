@@ -1,6 +1,7 @@
 package io.arkeus.sword.user.message
 
 import org.jibble.pircbot.Colors
+import io.arkeus.sword.data.Element
 
 object Colorizer {
 	val bracketedColors = Array(Colors.RED, Colors.OLIVE, Colors.GREEN, Colors.BLUE, Colors.MAGENTA, Colors.DARK_GREEN, Colors.DARK_BLUE, Colors.PURPLE)
@@ -14,6 +15,10 @@ object Colorizer {
 		for (brackets <- """\{(.*?)\}""".r.findAllIn(message)) {
 			coloredMessage = colorizeBrackets(coloredMessage, brackets, false)
 		}
+		for ((key, color) <- colorMap) {
+			coloredMessage = coloredMessage.replaceAll("<:" + key + ">", color)
+		}
+		coloredMessage = coloredMessage.replaceAll("<:>", Colors.NORMAL)
 		formatTags(coloredMessage)
 	}
 
@@ -29,4 +34,12 @@ object Colorizer {
 	}
 
 	def formatTags(message: String) = message.replaceAll("""''(.*?)''""", Colors.BOLD + "$1" + Colors.BOLD)
+	
+	val colorMap = Map("pink" -> Colors.MAGENTA, "gray" -> Colors.LIGHT_GRAY, "black" -> Colors.BLACK, "red" -> Colors.RED, "green" -> Colors.GREEN, "blue" -> Colors.BLUE, "yellow" -> Colors.OLIVE)
+}
+
+trait Colorfier {
+	def ce(str:String, e:Element.Value) = s"${elementMap(e)}$str${Colors.BLACK}"
+		
+	val elementMap = Map(Element.Physical -> Colors.BLACK, Element.Fire -> Colors.RED, Element.Water -> Colors.BLUE, Element.Earth -> Colors.GREEN, Element.Air -> Colors.OLIVE)
 }

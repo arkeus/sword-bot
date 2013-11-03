@@ -3,7 +3,7 @@ package io.arkeus.sword.user
 import scala.collection.mutable.HashMap
 
 class Statistics {
-	val stats = HashMap() ++ Statistic.names.map(name => (name, 10)).toMap
+	val stats = HashMap() ++ Statistic.names.map(name => (name, 5)).toMap
 	
 	def get(stat:String) = stats.get(stat).orElse(Some(0)).get
 	def set(stat:String, value:Int) = stats.put(stat, value)

@@ -5,13 +5,16 @@ class Experience(var level: Int = 1, var current: Int = 0, var experienceFormula
 	var max = experienceFormula(level)
 
 	def gain(amount: Int) = {
+		var leveledUp = false
 		current += amount
 		while (current > max) {
 			level += 1
 			current -= max
 			max = experienceFormula(level)
+			leveledUp = true
 		}
+		leveledUp
 	}
 
-	private def defaultExperienceFormula(level: Int): Int = (100 + 10 * (level - 1) + Math.pow(level - 1, 1.1)).toInt
+	private def defaultExperienceFormula(level: Int): Int = (10 + 1 * (level - 1) + Math.pow(level - 1, 1.1)).toInt
 }

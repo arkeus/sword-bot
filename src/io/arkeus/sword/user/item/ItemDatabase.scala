@@ -16,4 +16,6 @@ object ItemDatabase {
 	object Fists extends Weapon("Fists", 0)
 	object Skin extends Armor("Skin", 0)
 	object Hand extends Shield("Hand", 0)
+	
+	object Claws extends Weapon("Claws", 1)
 }

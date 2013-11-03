@@ -19,4 +19,11 @@ class ColorizerTest {
 		val colorized = Colorizer.colorize(message)
 		assertThat(colorized, is("this " + Colors.BOLD + "is" + Colors.BOLD + " simple"))
 	}
+	
+	@Test
+	def colorTest = {
+		val message = "this <:red>is<:> sparta?"
+		val colorized = Colorizer.colorize(message)
+		assertThat(colorized, is(s"this ${Colors.RED}is${Colors.NORMAL} sparta?"))
+	}
 }

@@ -41,9 +41,14 @@ class SwordUser(val name: String) extends Logger with Fightable {
 	}
 
 	def stat(stat:String) = stats.get(stat)
+	def weapon = equipment.weapon
 	def damage = equipment.weapon.damage
 	def armor = equipment.armor.armor + equipment.shield.armor
 	def element = equipment.weapon.element
+	def level = experience.level
+	
+	def gainGold(amount: Int) = gold += amount
+	def gainExperience(amount: Int) = experience.gain(amount)
 
 	def send(message: String) = {
 		if (chat != null) {

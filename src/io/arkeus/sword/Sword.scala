@@ -50,6 +50,9 @@ class Sword(val config: Config) extends PircBot with Logger {
 	}
 
 	override protected def onIncomingChatRequest(chat: DccChat) = {
-		Users.find(chat.getNick()).open(chat)
+		// Hard coding this to prevent abuse during testing
+		if (chat.getNick().toLowerCase() == "arkeus") {
+			Users.find(chat.getNick()).open(chat)
+		}
 	}
 }
