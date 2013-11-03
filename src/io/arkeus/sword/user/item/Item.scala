@@ -1,5 +1,6 @@
 package io.arkeus.sword.user.item
 
-class Item(val name: String, val level: Int) {
-
+abstract class Item(val name: String, val level: Int) {
+	def itemtype:String
+	def subinfo:String
 }

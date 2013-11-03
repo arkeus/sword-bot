@@ -7,7 +7,7 @@ import io.arkeus.sword.user.item.ItemDatabase
 
 object InventoryCommands {
 	object Show extends Command {
-		override def execute(user:SwordUser, params:Parameters) = {
+		override def execute(user: SwordUser, params: Parameters) = {
 			if (user.inventory.empty) {
 				user.send("Your inventory is currently empty")
 			} else {
@@ -16,17 +16,17 @@ object InventoryCommands {
 			}
 		}
 	}
-	
+
 	object Inspect extends Command {
-		override def execute(user:SwordUser, params:Parameters) = {
+		override def execute(user: SwordUser, params: Parameters) = {
 			val item = user.inventory.get(params.int("id"))
 			user.send(s"${item.name} [0 Slots]")
-			//user.send(s"${item.itemtype} (${item.subinfo})")
+			user.send(s"${item.itemtype} (${item.subinfo})")
 		}
 	}
-	
+
 	object Debug extends Command {
-		override def execute(user:SwordUser, params:Parameters) = {
+		override def execute(user: SwordUser, params: Parameters) = {
 			user.inventory.add(ItemDatabase.Weapons(1))
 		}
 	}
