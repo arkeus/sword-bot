@@ -17,6 +17,7 @@ class Chat(val chat: DccChat) extends Actor with Logger {
 			chat.accept()
 			user.chat = chat
 
+			user.send("Welcome to {Sword Bot}, home of the {Sword Bot}, can I take your order?")
 			Iterator.continually(chat.readLine).takeWhile(_ != null).foreach(processLine(_))
 		} catch {
 			case _: IOException => println("OH NO IO EXCEPTION CALL THE KHALEESI")

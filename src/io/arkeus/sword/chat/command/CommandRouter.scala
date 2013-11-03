@@ -6,6 +6,7 @@ import io.arkeus.sword.util.Logger
 import io.arkeus.sword.chat.command.router.Router
 import io.arkeus.sword.chat.command.impl.UserCommands
 import io.arkeus.sword.chat.command.impl.InventoryCommands
+import io.arkeus.sword.chat.command.impl.UselessCommands
 
 object CommandRouter extends Logger {
 	val router = new Router(List(
@@ -19,6 +20,8 @@ object CommandRouter extends Logger {
 		// Battle
 		("battle", null),
 		("battle $area:Int", null),
+		// Useless
+		("look $direction:String", UselessCommands.Look),
 		// Let me end list with a , please
 		("_", null)
 	))
