@@ -7,10 +7,10 @@ import org.jibble.pircbot.Colors
 
 class ColorizerTest {
 	@Test
-	def colorizeTest = {
-		val message = "{simple} {message here}"
+	def noColorTest = {
+		val message = "simple message here"
 		val colorized = Colorizer.colorize(message)
-		assertThat(colorized, is("{simple} {message here}"))
+		assertThat(colorized, is("simple message here"))
 	}
 	
 	@Test

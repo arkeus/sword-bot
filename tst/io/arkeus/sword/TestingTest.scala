@@ -8,8 +8,5 @@ import io.arkeus.sword.activity.BattleActivity
 class TestingTest {
 	@Test
 	def test: Unit = {
-		val a = new BattleActivity(null).start
-		Thread.sleep(5000)
-		a ! Stop
 	}
 }

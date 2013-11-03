@@ -8,7 +8,8 @@ import io.arkeus.sword.chat.command.router.parse._
 class ParametersTest {
 	@Test
 	def parameterStringTest = {
-		val params = new Parameters(Map[String, Any]("one" -> 1, "two" -> "two"))
+		val params = new Parameters(Map[String, Any]("one" -> 1, "two" -> "two"), "the message")
 		assertThat(params.toString, is("one => 1, two => two"))
+		assertThat(params.message, is("the message"))
 	}
 }

@@ -52,6 +52,13 @@ class RouteTest {
 		assertThat(params.int("num"), is(4))
 		assertThat(params.string("item"), is("sword"))
 	}
+	
+	@Test
+	def parameterizeRouteWithMessageTest = {
+		val route = new Route("buy $num:Int $item:String", null)
+		assertThat(route.parameterize("buy 4 sword for only a dollar").message, is("for only a dollar"))
+		assertThat(route.parameterize("buy 4 sword").message, is(""))
+	}
 
 	@Test
 	def overloadedRouteTest = {

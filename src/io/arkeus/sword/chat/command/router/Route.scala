@@ -40,7 +40,7 @@ class Route(routeInfo: (String, Command)) {
 				params.put(key, value)
 			}
 		}
-		return new Parameters(params.toMap)
+		return new Parameters(params.toMap, tokens.drop(nodes.length).mkString(" "))
 	}
 
 	private def calculateScore: Int = {

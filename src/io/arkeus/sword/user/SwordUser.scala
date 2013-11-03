@@ -30,13 +30,14 @@ class SwordUser(val name: String) extends Logger {
 
 	def equip(item: Item) = {
 		val removedItem = equipment.equip(item) match {
-			case Some(unequipped) => inventory.add(unequipped); unequipped
+			case Some(unequipped) =>
+				inventory.add(unequipped); unequipped
 			case None => null
 		}
 		inventory.remove(item)
 		removedItem
 	}
-	
+
 	def damage = equipment.weapon.damage
 	def armor = equipment.armor.armor + equipment.shield.armor
 
@@ -54,25 +55,25 @@ class SwordUser(val name: String) extends Logger {
 		val basicInfo = s"[$name] [Level ${experience.level} - ${experience.current}/${experience.max}]"
 		val financeInfo = s"[Gold $gold]"
 		val statInfo = s"[STATS $stats]"
-		
+
 		if (self) {
 			s"$basicInfo $financeInfo $statInfo"
 		} else {
 			s"$basicInfo"
 		}
 	}
-	
+
 	def battle = start[BattleActivity]
-	
+
 	def start[T <: Activity]()(implicit manifest: Manifest[T]) = {
 		if (activity == null) {
 			activity = manifest.erasure.getDeclaredConstructor(classOf[SwordUser]).newInstance(this).asInstanceOf[T]
 			activity.start
 		}
 	}
-	
+
 	def stop = if (activity != null) activity ! Stop
-	
+
 	def open(dccChat: DccChat) = {
 		logger.info(s"Initiating chat with $name")
 		chat = new Chat(dccChat, this)
@@ -80,13 +81,13 @@ class SwordUser(val name: String) extends Logger {
 		chat.start
 		send("Welcome to {Sword Bot}, home of the {Sword Bot}, can I take your order?")
 	}
-	
+
 	def close = {
 		chat.close
 		chat = null
 	}
-	
-	implicit class FormattedMessage(message:String) {
+
+	implicit class FormattedMessage(message: String) {
 		implicit def colorize = Colorizer.colorize(message)
 	}
 }
