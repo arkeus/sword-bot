@@ -25,7 +25,7 @@ object InventoryCommands {
 				user.send(s"Invalid id ''$id'', use ''inventory'' command to view ids of items you own.")
 			} else {
 				val item = user.inventory.get(id - 1)
-				user.send(s"[${item.name} - ${Colors.LIGHT_GRAY}0 Slots${Colors.NORMAL}]")
+				user.send(s"{''${item.name}'' - ${Colors.LIGHT_GRAY}0 Slots${Colors.NORMAL}}")
 				user.send(s"${item.itemtype} (${item.subinfo})")
 			}
 		}

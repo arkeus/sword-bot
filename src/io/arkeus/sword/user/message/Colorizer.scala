@@ -12,10 +12,13 @@ object Colorizer {
 		for (brackets <- """\[(.*?)\]""".r.findAllIn(message)) {
 			coloredMessage = colorizeBrackets(coloredMessage, brackets)
 		}
+		for (brackets <- """\{(.*?)\}""".r.findAllIn(message)) {
+			coloredMessage = colorizeBrackets(coloredMessage, brackets, false)
+		}
 		formatTags(coloredMessage)
 	}
 
-	def colorizeBrackets(message: String, brackets: String) = {
+	def colorizeBrackets(message: String, brackets: String, boldTitle: Boolean = true) = {
 		val color = bracketedColors(bracketOffset % bracketedColors.length)
 		bracketOffset += 1
 		val inner = brackets.substring(1, brackets.length - 1)
@@ -23,7 +26,7 @@ object Colorizer {
 		println("SPLIT " + split)
 		val alias = if (split < 0) inner else inner.substring(0, split)
 		val rest = (if (split < 0) "" else inner.substring(split))
-		val coloredBrackets = Colors.BOLD + color + "[" + Colors.NORMAL + Colors.BOLD + alias + Colors.BOLD + rest + Colors.BOLD + color + "]" + Colors.NORMAL
+		val coloredBrackets = Colors.BOLD + color + "[" + Colors.NORMAL + (if (boldTitle) Colors.BOLD + alias + Colors.BOLD else alias ) + rest + Colors.BOLD + color + "]" + Colors.NORMAL
 		message.replace(brackets, coloredBrackets)
 	}
 

@@ -3,7 +3,7 @@ package io.arkeus.sword.user.item
 import scala.collection.mutable.ListBuffer
 
 class Inventory {
-	val items = new ListBuffer[Item]
+	val items = ListBuffer[Item](ItemDatabase.Weapons(1))
 
 	def add(item: Item) = items += item
 	def remove(index: Int) = items.remove(index)
