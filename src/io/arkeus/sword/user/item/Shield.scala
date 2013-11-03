@@ -4,5 +4,5 @@ class Shield(name: String, level: Int) extends Item(name, level) {
 	val armor = level * 3
 	
 	override def itemtype = "Shield"
-	override def subinfo = s"($armor Armor)"
+	override def subinfo = s"$armor Armor"
 }

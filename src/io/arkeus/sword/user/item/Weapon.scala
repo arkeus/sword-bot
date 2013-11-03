@@ -4,5 +4,5 @@ class Weapon(name: String, level: Int, val element: Element.Value = Element.Phys
 	val damage = 1 + level * 2
 	
 	override def itemtype = "Weapon"
-	override def subinfo = s"(damage Damage)"
+	override def subinfo = s"$damage Damage"
 }
