@@ -40,7 +40,7 @@ class BattleActivity(user: SwordUser, args: List[Any]) extends Activity(user, ar
 					rewards match {
 						case gold: GoldReward => {
 							user.gainGold(gold.amount)
-							user.send(s"You found <:red>''${gold.amount}''<:> gold!")
+							user.send(s"You found <:red>''${gold.amount}''<:> gold! <:gray>(${user.gold} total)<:>")
 						}
 						case experience: ExperienceReward => {
 							val leveledUp = user.gainExperience(experience.amount)
