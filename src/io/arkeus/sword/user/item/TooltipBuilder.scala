@@ -4,7 +4,7 @@ import scala.collection.mutable.ListBuffer
 
 class TooltipBuilder(item: Item) {
 	val MIN_WIDTH = 22
-	val width = Math.max(MIN_WIDTH, 12 + item.name.length)
+	val width = Math.max(MIN_WIDTH, 4 + item.name.length)
 	val lines = ListBuffer[String]()
 		
 	def build = {

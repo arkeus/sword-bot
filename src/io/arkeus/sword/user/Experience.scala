@@ -22,5 +22,5 @@ class Experience(var level: Int = 1, var current: Int = 0, var experienceFormula
 		max = experienceFormula(level)
 	}
 
-	private def defaultExperienceFormula(level: Int): Int = (25 + 1 * (level - 1) + Math.pow(level - 1, 1.5)).toInt
+	private def defaultExperienceFormula(level: Int): Int = (25 + 10 * (level - 1) + Math.pow(level - 1, 1.5)).toInt
 }

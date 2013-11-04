@@ -56,7 +56,11 @@ class Sword(val config: Config) extends PircBot with Logger {
 
 	override protected def onIncomingChatRequest(chat: DccChat) = {
 		val user = Users.find(chat.getNick())
-		user.administrator = config.administrators.isAdministrator(chat.getLogin(), chat.getHostname())
-		user.open(chat)
+		if (!Users.isActive(user.name)) {
+			user.administrator = config.administrators.isAdministrator(chat.getLogin(), chat.getHostname())
+			user.open(chat)
+		} else {
+			chat.close()
+		}
 	}
 }

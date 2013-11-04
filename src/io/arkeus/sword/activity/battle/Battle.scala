@@ -7,6 +7,8 @@ import io.arkeus.sword.activity.battle.reward.Reward
 import io.arkeus.sword.activity.battle.reward.ExperienceReward
 import io.arkeus.sword.activity.battle.reward.GoldReward
 import io.arkeus.sword.util.RandomUtils
+import io.arkeus.sword.user.item.ItemFinder
+import io.arkeus.sword.activity.battle.reward.ItemReward
 
 class Battle(val sourceFightable: Fightable, val targetFightable: Fightable) {
 	val source = new BattleEntity(sourceFightable)
@@ -42,5 +44,12 @@ class Battle(val sourceFightable: Fightable, val targetFightable: Fightable) {
 		
 		rewards += new ExperienceReward(experience)
 		rewards += new GoldReward(gold)
+		
+		if (Math.random() < 0.5) {
+			ItemFinder.find(target.level) match {
+				case Some(item) => rewards += new ItemReward(item)
+				case None =>
+			}
+		}
 	}
 }

@@ -6,6 +6,7 @@ import io.arkeus.sword.activity.battle.Battle
 import io.arkeus.sword.activity.battle.reward.GoldReward
 import io.arkeus.sword.user.message.Colorfier
 import io.arkeus.sword.activity.battle.reward.ExperienceReward
+import io.arkeus.sword.activity.battle.reward.ItemReward
 
 class BattleActivity(user: SwordUser, args: List[Any]) extends Activity(user, args) with Colorfier {
 	val area: Area = args(0).asInstanceOf[Area]
@@ -48,6 +49,10 @@ class BattleActivity(user: SwordUser, args: List[Any]) extends Activity(user, ar
 							if (leveledUp) {
 								user.send(s"{''Level Up''} You've reached level <:pink>''${user.level}''<:>!")
 							}
+						}
+						case item: ItemReward => {
+							user.send(s"You found a {''${item.item.name}''}!")
+							user.inventory.add(item.item)
 						}
 					}
 				}
