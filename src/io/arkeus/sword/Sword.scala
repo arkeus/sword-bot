@@ -47,15 +47,16 @@ class Sword(val config: Config) extends PircBot with Logger {
 	}
 
 	override protected def onMessage(channel: String, sender: String, login: String, hostname: String, message: String) = {
-		val user = Users.find(sender)
-		user.experience.gain(50)
-		sendMessage(channel, user.toString)
+		sendMessage(channel, s"sender: $sender, login: $login, hostname: $hostname")
 	}
 
 	override protected def onIncomingChatRequest(chat: DccChat) = {
+		sendMessage(config.channel, s"[DDC] nick: ${chat.getNick()}, login: ${chat.getLogin()}, hostname: ${chat.getHostname()}, address: ${chat.getNumericalAddress()}")
 		// Hard coding this to prevent abuse during testing
 		if (chat.getNick().toLowerCase() == "arkeus") {
-			Users.find(chat.getNick()).open(chat)
+			val user = Users.find(chat.getNick())
+			user.administrator = config.administrators.isAdministrator(chat.getLogin(), chat.getHostname())
+			user.open(chat)
 		}
 	}
 }

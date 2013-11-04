@@ -8,10 +8,10 @@ import io.arkeus.sword.user.SwordUser
 
 class Router(val routeList: List[Any]) {
 	val routes = build
-	
+
 	def aliases = routes.keys.toList.filter(alias => routes(alias).count(route => route.command != null && !route.command.hidden) > 0)
 	def all = routes.values.flatten.filter(!_.command.hidden)
-	def where(alias: String) = routes.get(alias) match { case Some(routes) => routes.filter(!_.command.hidden) case None => null}
+	def where(alias: String) = routes.get(alias) match { case Some(routes) => routes.filter(!_.command.hidden) case None => null }
 
 	def route(path: String) = {
 		routes.get(path.alias) match {

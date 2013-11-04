@@ -27,4 +27,11 @@ object UserCommands {
 		
 		override def help = "Views general information about another user's character"
 	}
+	
+	object ActiveUsers extends Command {
+		override def execute(user: SwordUser, params: Parameters) = {
+			user.send("The follow users are currently active:")
+			user.send(Users.activeUsers.map(_.name).mkString(" "))
+		}
+	}
 }

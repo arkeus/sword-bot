@@ -10,6 +10,9 @@
 	<prefix>;</prefix>
 	<dataDirectory>C:\Dev\Workspace\Scala\SwordBot\data</dataDirectory>
 	<administrators>
-		<user>Arkeus</user>
+		<administrator alias="arkeus">
+			<adminLogin>~Arkeus</adminLogin>
+			<adminHostname>198.244.103.85</adminHostname>
+		</administrator>
 	</administrators>
 </bot>

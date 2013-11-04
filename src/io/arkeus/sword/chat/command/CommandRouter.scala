@@ -17,6 +17,7 @@ object CommandRouter extends Logger {
 		// User
 		("user $name:String", UserCommands.Profile),
 		("user", UserCommands.Self),
+		("users", UserCommands.ActiveUsers),
 		// Inventory
 		("inventory $id:Int", InventoryCommands.Inspect),
 		("inventory gimme", InventoryCommands.Debug),

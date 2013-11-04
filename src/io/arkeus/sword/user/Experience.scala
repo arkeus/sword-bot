@@ -15,6 +15,12 @@ class Experience(var level: Int = 1, var current: Int = 0, var experienceFormula
 		}
 		leveledUp
 	}
+	
+	def load(level: Int, current: Int) = {
+		this.level = level
+		this.current = current
+		max = experienceFormula(level)
+	}
 
 	private def defaultExperienceFormula(level: Int): Int = (10 + 1 * (level - 1) + Math.pow(level - 1, 1.1)).toInt
 }

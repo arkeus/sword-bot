@@ -21,11 +21,13 @@ import io.arkeus.sword.activity.battle.Area
 import io.arkeus.sword.activity.battle.Fightable
 import com.twitter.json.Json
 import io.arkeus.sword.SwordData
+import org.jibble.pircbot.Colors
 
 class SwordUser(val name: String) extends Logger with Fightable {
 	var chat: Chat = null
 	var activity: Activity = null
 
+	var administrator = false
 	var gold = 0
 	var stats = new Statistics
 	var experience = new Experience
@@ -42,13 +44,13 @@ class SwordUser(val name: String) extends Logger with Fightable {
 		removedItem
 	}
 
-	def stat(stat:String) = stats.get(stat)
+	def stat(stat: String) = stats.get(stat)
 	def weapon = equipment.weapon
 	def damage = equipment.weapon.damage
 	def armor = equipment.armor.armor + equipment.shield.armor
 	def element = equipment.weapon.element
 	def level = experience.level
-	
+
 	def gainGold(amount: Int) = gold += amount
 	def gainExperience(amount: Int) = experience.gain(amount)
 
@@ -56,14 +58,14 @@ class SwordUser(val name: String) extends Logger with Fightable {
 		if (chat != null) {
 			chat.send(message.colorize)
 		} else {
-			logger.warn(s"Attempted to send message to $this but no chat was open")
+			//logger.warn(s"Attempted to send message to $this but no chat was open")
 		}
 	}
 
 	override def toString = name
 
 	def profile(self: Boolean) = {
-		val basicInfo = s"[$name] [Level ${experience.level} - ${experience.current}/${experience.max}]"
+		val basicInfo = s"[$name]${if (administrator) "[<:red>admin<:>]"} [Level ${experience.level} - ${experience.current}/${experience.max}]"
 		val financeInfo = s"[Gold $gold]"
 		val statInfo = s"[STATS $stats]"
 
@@ -74,7 +76,7 @@ class SwordUser(val name: String) extends Logger with Fightable {
 		}
 	}
 
-	def battle(area:Area) = start[BattleActivity](List(area))
+	def battle(area: Area) = start[BattleActivity](List(area))
 
 	def start[T <: Activity](args: List[Any])(implicit manifest: Manifest[T]) = {
 		if (activity == null) {
@@ -88,6 +90,7 @@ class SwordUser(val name: String) extends Logger with Fightable {
 	def idle = activity == null
 
 	def open(dccChat: DccChat) = {
+		Users.setActive(this)
 		logger.info(s"Initiating chat with $name")
 		chat = new Chat(dccChat, this)
 		chat.accept
@@ -96,13 +99,14 @@ class SwordUser(val name: String) extends Logger with Fightable {
 	}
 
 	def close = {
+		Users.setInactive(this)
 		chat.close
 		chat = null
 	}
-	
+
 	def save = SwordData.saveUser(this)
 	def load = SwordData.loadUser(this)
-	
+
 	def serialize = {
 		Json.build(Map(
 			"name" -> name,
@@ -111,16 +115,16 @@ class SwordUser(val name: String) extends Logger with Fightable {
 			"level" -> experience.level,
 			"experience" -> experience.current,
 			"inventory" -> inventory.serialize,
-			"equipment" -> equipment.serialize
-		)).toString
+			"equipment" -> equipment.serialize)).toString
 	}
-	
+
 	def unserialize(saved: String) = {
 		val data = Json.parse(saved).asInstanceOf[Map[String, Any]]
 		gold = data.get("gold").getOrElse(0).asInstanceOf[Int]
 		stats.unserialize(data.get("stats").getOrElse(null).asInstanceOf[Map[String, Int]])
-		experience.current = data.get("experience").getOrElse(experience.current).asInstanceOf[Int]
-		experience.level = data.get("level").getOrElse(experience.level).asInstanceOf[Int]
+		val experienceLevel = data.get("level").getOrElse(experience.level).asInstanceOf[Int]
+		val experienceCurrent = data.get("experience").getOrElse(experience.current).asInstanceOf[Int]
+		experience.load(experienceLevel, experienceCurrent)
 		inventory.unserialize(data.get("inventory").getOrElse(null).asInstanceOf[List[Map[String, Any]]])
 	}
 

@@ -4,6 +4,7 @@ import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
 import org.xml.sax.helpers.NewInstance
 import org.w3c.dom.Element
+import scala.collection.mutable.HashSet
 
 class ConfigReader(val configFile: File) {
 	private var document = buildConfig
@@ -28,7 +29,7 @@ class ConfigReader(val configFile: File) {
 		config.login = getString("login", "SwordBot")
 		config.prefix = getString("prefix", ";")
 		config.dataDirectory = getString("dataDirectory", "data")
-		config.administrators = Set[String]()
+		config.administrators = getAdministrators
 
 		return config
 	}
@@ -62,5 +63,27 @@ class ConfigReader(val configFile: File) {
 			throw new IllegalArgumentException(s"Expected exactly one config value for tag '$tagName', found $length")
 		}
 		return nodes.item(0).asInstanceOf[Element]
+	}
+	
+	private def getAdministrators = {
+		val set = new HashSet[Administrator]
+		
+		val element = getElement("administrators")
+		if (element != null) {
+			val nodes = element.getElementsByTagName("administrator")
+			for (i <- 0 to nodes.getLength() - 1) {
+				val node = nodes.item(i).asInstanceOf[Element]
+				val alias = if (node.hasAttribute("alias")) node.getAttribute("alias") else null
+				val loginNode = node.getElementsByTagName("adminLogin")
+				val login = if (loginNode.getLength() == 1) loginNode.item(0).getTextContent else null
+				val hostnameNode = node.getElementsByTagName("adminHostname")
+				val hostname = if (hostnameNode.getLength() == 1) hostnameNode.item(0).getTextContent else null
+				set += new Administrator(alias, login, hostname)
+			}
+		}
+		
+		println("ADMINS: " + set)
+		
+		new Administrators(set)
 	}
 }

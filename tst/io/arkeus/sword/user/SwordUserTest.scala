@@ -18,8 +18,8 @@ class SwordUserTest {
 	@Test
 	def jsonTest = {
 		val map = Map("bob" -> 1, "something" -> List(Map("a" -> 1), List(1, 2, 3)))
-		println(Json.build(map).toString)
+		//println(Json.build(map).toString)
 		val parsed = Json.parse(Json.build(map).toString)
-		println(parsed)
+		//println(parsed)
 	}
 }

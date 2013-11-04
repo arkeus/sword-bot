@@ -4,10 +4,10 @@ import io.arkeus.sword.user.SwordUser
 import io.arkeus.sword.chat.Message
 import io.arkeus.sword.chat.command.router.Parameters
 
-abstract class Command(val flags:Int = 0) {
+abstract class Command(val flags: Int = 0) {
 	def execute(user: SwordUser, params: Parameters): Any
 	def help = "No Help Found"
-		
+
 	def hidden = (flags & Command.HIDDEN) > 0
 	def admin = (flags & Command.ADMIN) > 0
 	def idleable = (flags & Command.IDLEABLE) > 0
