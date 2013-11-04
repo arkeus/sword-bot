@@ -29,5 +29,7 @@ object StatCommands {
 				}
 			}
 		}
+		
+		override def help = "Adds $amount stat points to $stat (one of " + Statistic.names.mkString(" ") + ")"
 	}
 }

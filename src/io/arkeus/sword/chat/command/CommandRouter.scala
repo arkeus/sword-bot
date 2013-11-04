@@ -11,6 +11,7 @@ import io.arkeus.sword.chat.command.impl.BattleCommands
 import io.arkeus.sword.chat.command.impl.ActivityCommands
 import io.arkeus.sword.chat.command.impl.HelpCommands
 import io.arkeus.sword.chat.command.router.Route
+import io.arkeus.sword.chat.command.impl.StatCommands
 
 object CommandRouter extends Logger {
 	val router = new Router(List(
@@ -18,6 +19,9 @@ object CommandRouter extends Logger {
 		("user $name:String", UserCommands.Profile),
 		("user", UserCommands.Self),
 		("users", UserCommands.ActiveUsers),
+		// Stats
+		("stats add $amount:Int $stat:String", StatCommands.Add),
+		("stats", StatCommands.Show),
 		// Inventory
 		("inventory $id:Int", InventoryCommands.Inspect),
 		("inventory gimme", InventoryCommands.Debug),
