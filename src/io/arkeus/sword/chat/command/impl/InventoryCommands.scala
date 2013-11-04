@@ -9,11 +9,13 @@ import io.arkeus.sword.user.item.ItemInspector
 
 object InventoryCommands {
 	object Show extends Command {
+		val PAGE_SIZE = 25
+		
 		override def execute(user: SwordUser, params: Parameters) = {
 			if (user.inventory.empty) {
 				user.send("Your inventory is currently empty")
 			} else {
-				val inventory = user.inventory.all.zipWithIndex.map((zipped) => s"[${zipped._2 + 1}] ${zipped._1.name}").mkString(" ")
+				val inventory = user.inventory.all.zipWithIndex.map((zipped) => s"[${zipped._2 + 1}] ${zipped._1.name} <:gray>(${zipped._1.shortinfo})<:>").grouped(PAGE_SIZE).map(_.mkString(" ")).mkString("\n")
 				user.send(s"[Inventory ${user.inventory.size} items] Use ''inventory ID'' to inspect an item.\n$inventory")
 			}
 		}

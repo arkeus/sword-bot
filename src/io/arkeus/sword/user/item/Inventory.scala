@@ -16,6 +16,7 @@ class Inventory {
 		}
 	}
 	def all = items
+	def category(category:String) = all.filter(_.itemtype == category)
 
 	def size = items.length
 	def empty = size == 0

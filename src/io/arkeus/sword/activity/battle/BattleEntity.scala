@@ -1,6 +1,8 @@
 package io.arkeus.sword.activity.battle
 
 import io.arkeus.sword.data.AttackType
+import io.arkeus.sword.user.item.Shield
+import io.arkeus.sword.user.item.Armor
 
 class BattleEntity(source:Fightable) {
 	val name = source.name
@@ -41,15 +43,29 @@ class BattleEntity(source:Fightable) {
 		
 		val difference = (offensive - defensive) / 100
 		val staticBonus = (offensive / 9).floor
+		val staticDefense = defensive / 3
 		
-		var dmg = source.damage.toDouble + staticBonus
+		var dmg = Math.max(1, source.damage.toDouble + staticBonus - staticDefense)
 		if (difference > 0) {
 			dmg *= (1 + difference)
 		} else {
 			dmg /= (difference - 1).abs
 		}
 		
+		val armorProtection = calculateArmorReduction(armor, (Shield.armor(target.level) + Armor.armor(target.level)) * 0.5)
+		dmg *= (1 - armorProtection)
+		
 		dmg.ceil.toInt
+	}
+	
+	def calculateArmorReduction(armor: Double, targetArmor: Double) = {
+		var armorProtection: Double = 0
+		if (armor > targetArmor) {
+			armorProtection = 0.6
+		} else {
+			armorProtection = (armor / targetArmor) * 0.6
+		}
+		armorProtection
 	}
 	
 	def checkForHit(source: BattleEntity, target: BattleEntity) = {

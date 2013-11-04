@@ -12,6 +12,7 @@ class Statistics {
 	def set(stat: String, value: Int) = stats.put(stat, value)
 	
 	def spend(stat: String, amount: Int) = set(stat, get(stat) + amount)
+	def reset = Statistic.names.foreach(set(_, STARTING_VALUE))
 	
 	def points(level: Int) = (level - 1) * 2 - (stats.values.sum - (STARTING_VALUE * NUM_STATS))
 

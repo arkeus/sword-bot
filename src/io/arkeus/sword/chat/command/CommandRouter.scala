@@ -21,6 +21,8 @@ object CommandRouter extends Logger {
 		("users", UserCommands.ActiveUsers),
 		// Stats
 		("stats add $amount:Int $stat:String", StatCommands.Add),
+		("stats reset", StatCommands.Reset),
+		("stats reset confirm", StatCommands.ResetConfirm),
 		("stats", StatCommands.Show),
 		// Inventory
 		("inventory $id:Int", InventoryCommands.Inspect),

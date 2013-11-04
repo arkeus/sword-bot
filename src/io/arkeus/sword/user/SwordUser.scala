@@ -44,8 +44,9 @@ class SwordUser(val name: String) extends Logger with Fightable {
 			}
 			inventory.remove(item)
 			removedItem
+		} else {
+			null
 		}
-		null
 	}
 
 	def stat(stat: String) = stats.get(stat)

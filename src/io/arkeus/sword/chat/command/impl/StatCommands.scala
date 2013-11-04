@@ -32,4 +32,25 @@ object StatCommands {
 		
 		override def help = "Adds $amount stat points to $stat (one of " + Statistic.names.mkString(" ") + ")"
 	}
+	
+	object Reset extends Command {
+		override def execute(user: SwordUser, params: Parameters) = {
+			val cost = StatCommands.resetCost(user.level)
+			user.send(s"Resetting your stats will cost ''$cost gold''. Use ''stats reset confirm'' to reset.")
+		}
+	}
+	
+	object ResetConfirm extends Command {
+		override def execute(user: SwordUser, params: Parameters) = {
+			val cost = StatCommands.resetCost(user.level)
+			if (user.gold < cost) {
+				user.send("You do not have the required gold to reset your stats")
+			} else {
+				user.stats.reset
+				user.send("Your stats have been reset!")
+			}
+		}
+	}
+	
+	def resetCost(level: Int) = 10 + level * 2
 }

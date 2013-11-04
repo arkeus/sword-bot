@@ -9,6 +9,7 @@ class Weapon(name: String, level: Int) extends Item(name, level) {
 	
 	override def itemtype = "Weapon"
 	override def subinfo = s"$damage Damage"
+	override def shortinfo = s"$damage"
 	
 	override def toString = s"''$name'' <:gray><0 slots><:> - ''$damage'' damage"
 }
