@@ -49,7 +49,7 @@ object ItemDatabase extends Database[Item] {
 	
 	build(List(
 		// Weapons
-			
+		new Weapon("Wooden Stick", 1),
 		// Armor
 		
 		// Shields
@@ -60,7 +60,7 @@ object ItemDatabase extends Database[Item] {
 		new Shield("Hand", 0),
 		
 		// Enemy Weapons
-		new Weapon("Claws", 1)
+		new Weapon("Claws", 0)
 	) ++ tierItems)
 	
 	private def createTierItem[T](tier: String, baseName: String, levelOffset: Int)(implicit manifest: Manifest[T]) = {

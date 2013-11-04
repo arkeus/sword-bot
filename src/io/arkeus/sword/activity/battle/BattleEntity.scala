@@ -26,17 +26,35 @@ class BattleEntity(source:Fightable) {
 	def dead = hp <= 0
 	
 	def attack(target:BattleEntity) = {
-		if (Math.random() < 0.2) {
+		if (!checkForHit(this, target)) {
 			new AttackInfo(this, target, AttackType.Miss, weapon.name, 0, weapon.element)
 		} else {
-			val dmg = calculateDamage(this, target)
+			val dmg = calculateDamage(this, target, "weapon")
 			target.hit(dmg)
 			new AttackInfo(this, target, AttackType.Weapon, weapon.name, dmg, weapon.element)
 		}
 	}
 	
-	def calculateDamage(source: BattleEntity, target: BattleEntity) = {
-		source.damage + 1
+	def calculateDamage(source: BattleEntity, target: BattleEntity, attackType: String) = {
+		val offensive = if (attackType == "weapon") source.strength else source.wisdom
+		val defensive = target.defense
+		
+		val difference = (offensive - defensive) / 100
+		val staticBonus = (offensive / 9).floor
+		
+		var dmg = source.damage.toDouble + staticBonus
+		if (difference > 0) {
+			dmg *= (1 + difference)
+		} else {
+			dmg /= (difference - 1).abs
+		}
+		
+		dmg.ceil.toInt
+	}
+	
+	def checkForHit(source: BattleEntity, target: BattleEntity) = {
+		val accuracy = (90 + (source.agility - target.agility) / 1.5) / 100
+		Math.random() < accuracy
 	}
 	
 	def hit(damage:Int) = {

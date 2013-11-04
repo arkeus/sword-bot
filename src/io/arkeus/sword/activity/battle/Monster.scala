@@ -7,5 +7,5 @@ class Monster(val name: String, val level: Int) extends Fightable {
 	def stat(stat:String):Int = level
 	def damage:Int = level * 2
 	def armor:Int = level * 4
-	def weapon: Weapon = new Weapon("POOP", level)
+	def weapon: Weapon = new Weapon("cute little fluffy paws", level)
 }

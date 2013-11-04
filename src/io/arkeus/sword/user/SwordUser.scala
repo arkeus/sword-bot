@@ -22,6 +22,7 @@ import io.arkeus.sword.activity.battle.Fightable
 import com.twitter.json.Json
 import io.arkeus.sword.SwordData
 import org.jibble.pircbot.Colors
+import io.arkeus.sword.user.item.ItemDatabase
 
 class SwordUser(val name: String) extends Logger with Fightable {
 	var chat: Chat = null
@@ -35,13 +36,16 @@ class SwordUser(val name: String) extends Logger with Fightable {
 	var inventory = new Inventory
 
 	def equip(item: Item) = {
-		val removedItem = equipment.equip(item) match {
-			case Some(unequipped) =>
-				inventory.add(unequipped); unequipped
-			case None => null
+		if (item != null) {
+			val removedItem = equipment.equip(item) match {
+				case Some(unequipped) =>
+					inventory.add(unequipped); unequipped
+				case None => null
+			}
+			inventory.remove(item)
+			removedItem
 		}
-		inventory.remove(item)
-		removedItem
+		null
 	}
 
 	def stat(stat: String) = stats.get(stat)
@@ -106,6 +110,12 @@ class SwordUser(val name: String) extends Logger with Fightable {
 
 	def save = SwordData.saveUser(this)
 	def load = SwordData.loadUser(this)
+	
+	def initialize = {
+		val stick = ItemDatabase.byName("Wooden Stick").get.asInstanceOf[Weapon]
+		inventory.add(stick)
+		equip(stick)
+	}
 
 	def serialize = {
 		Json.build(Map(

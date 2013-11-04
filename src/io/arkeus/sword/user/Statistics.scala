@@ -3,7 +3,7 @@ package io.arkeus.sword.user
 import scala.collection.mutable.HashMap
 
 class Statistics {
-	val STARTING_VALUE = 5
+	val STARTING_VALUE = 1
 	val NUM_STATS = Statistic.names.length
 	
 	val stats = HashMap() ++ Statistic.names.map(name => (name, STARTING_VALUE)).toMap

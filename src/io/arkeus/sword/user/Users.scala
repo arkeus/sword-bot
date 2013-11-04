@@ -10,7 +10,10 @@ object Users extends scala.collection.mutable.HashMap[String, SwordUser] {
 		val username = normalize(name)
 		var user = get(username).getOrElse(new SwordUser(username))
 		if (!contains(username)) {
-			user.load
+			val loaded = user.load
+			if (!loaded) {
+				user.initialize
+			}
 			this.put(username, user)
 		}
 		return user

@@ -4,7 +4,7 @@ import io.arkeus.sword.data.Element
 import io.arkeus.sword.user.item.Weapon
 
 abstract trait Fightable {
-	def hp: Int = 5 + stat("stamina") * 2
+	def hp: Int = 10 + stat("stamina") * 2
 	def mp: Int = 5 + stat("spirit") * 2
 
 	def name: String

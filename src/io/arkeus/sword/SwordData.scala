@@ -23,7 +23,9 @@ object SwordData extends Logger {
 		val userFile = new File(usersDirectory, s"${user.name}.json")
 		if (userFile.exists()) {
 			user.unserialize(FileUtils.readFileToString(userFile))
+			true
 		}
+		false
 	}
 
 	def initialize(config: Config) = {
