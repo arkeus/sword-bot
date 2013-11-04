@@ -33,5 +33,7 @@ object UserCommands {
 			user.send("The follow users are currently active:")
 			user.send(Users.activeUsers.map(_.name).mkString(" "))
 		}
+		
+		override def help = "Shows the username of all active users"
 	}
 }
