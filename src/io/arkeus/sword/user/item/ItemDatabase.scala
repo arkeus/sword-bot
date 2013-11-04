@@ -38,12 +38,12 @@ object ItemDatabase extends Database[Item] {
 			createTierItem[Shield](tier, "Tower Shield", 14),
 			createTierItem[Shield](tier, "Aegis", 18),
 			// Tier Armors
-			createTierItem[Shield](tier, "Ring Mail", 1),
-			createTierItem[Shield](tier, "Scale Mail", 3),
-			createTierItem[Shield](tier, "Chainmail", 6),
-			createTierItem[Shield](tier, "Splint Mail", 10),
-			createTierItem[Shield](tier, "Banded Mail", 14),
-			createTierItem[Shield](tier, "Plate Armor", 18)
+			createTierItem[Armor](tier, "Ring Mail", 1),
+			createTierItem[Armor](tier, "Scale Mail", 3),
+			createTierItem[Armor](tier, "Chainmail", 6),
+			createTierItem[Armor](tier, "Splint Mail", 10),
+			createTierItem[Armor](tier, "Banded Mail", 14),
+			createTierItem[Armor](tier, "Plate Armor", 18)
 		)
 	}).flatten
 	
