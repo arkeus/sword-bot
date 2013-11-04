@@ -43,8 +43,9 @@ class BattleActivity(user: SwordUser, args: List[Any]) extends Activity(user, ar
 							user.send(s"You found <:red>''${gold.amount}''<:> gold!")
 						}
 						case experience: ExperienceReward => {
-							user.send(s"You gained <:green>''${experience.amount}''<:> experience!")
-							if (user.gainExperience(experience.amount)) {
+							val leveledUp = user.gainExperience(experience.amount)
+							user.send(s"You gained <:green>''${experience.amount}''<:> experience! <:gray>(${user.experience.current}/${user.experience.max})<:>")
+							if (leveledUp) {
 								user.send(s"{''Level Up''} You've reached level <:pink>''${user.level}''<:>!")
 							}
 						}
