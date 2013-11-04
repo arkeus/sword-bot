@@ -7,7 +7,7 @@ class Experience(var level: Int = 1, var current: Int = 0, var experienceFormula
 	def gain(amount: Int) = {
 		var leveledUp = false
 		current += amount
-		while (current > max) {
+		while (current >= max) {
 			level += 1
 			current -= max
 			max = experienceFormula(level)
