@@ -28,8 +28,7 @@ object InventoryCommands {
 				user.send(s"Invalid id ''$id'', use ''inventory'' command to view ids of items you own.")
 			} else {
 				val item = user.inventory.get(id - 1)
-				val messages = ItemInspector.inspect(item)
-				user.send(messages.mkString("\n"))
+				user.send(ItemInspector.inspect(item))
 			}
 		}
 		
@@ -58,8 +57,7 @@ object InventoryCommands {
 					case "shield" => user.equipment.shield
 					case "armor" => user.equipment.armor
 				}
-				val messages = ItemInspector.inspect(item)
-				user.send(messages)
+				user.send(ItemInspector.inspect(item))
 			}
 		}
 		
