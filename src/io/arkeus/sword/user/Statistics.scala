@@ -11,6 +11,8 @@ class Statistics {
 	def get(stat: String) = stats.get(stat).orElse(Some(0)).get
 	def set(stat: String, value: Int) = stats.put(stat, value)
 	
+	def spend(stat: String, amount: Int) = set(stat, get(stat) + amount)
+	
 	def points(level: Int) = (level - 1) * 2 - (stats.values.sum - (STARTING_VALUE * NUM_STATS))
 
 	def unserialize(data: Map[String, Int]) = if (data != null) data.foreach { case (key, value) => stats.put(key, value) }
