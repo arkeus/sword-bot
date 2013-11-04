@@ -7,4 +7,6 @@ class Weapon(name: String, level: Int, val element: Element.Value = Element.Phys
 	
 	override def itemtype = "Weapon"
 	override def subinfo = s"$damage Damage"
+	
+	override def toString = s"''$name'' <:gray><0 slots><:> - ''$damage'' damage"
 }

@@ -126,6 +126,7 @@ class SwordUser(val name: String) extends Logger with Fightable {
 		val experienceCurrent = data.get("experience").getOrElse(experience.current).asInstanceOf[Int]
 		experience.load(experienceLevel, experienceCurrent)
 		inventory.unserialize(data.get("inventory").getOrElse(null).asInstanceOf[List[Map[String, Any]]])
+		equipment.unserialize(data.get("equipment").getOrElse(null).asInstanceOf[List[Map[String, Any]]])
 	}
 
 	implicit class FormattedMessage(message: String) {

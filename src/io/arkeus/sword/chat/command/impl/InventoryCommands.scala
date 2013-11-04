@@ -59,7 +59,7 @@ object InventoryCommands {
 					case "armor" => user.equipment.armor
 				}
 				val messages = ItemInspector.inspect(item)
-				user.send(messages.mkString("\n"))
+				user.send(messages)
 			}
 		}
 		

@@ -35,4 +35,29 @@ class Equipment {
 	def armor = armorItem.getOrElse(ItemDatabase.byName("Skin").get.asInstanceOf[Armor])
 	
 	def serialize = List(weapon.serialize, shield.serialize, armor.serialize)
+	def unserialize(data: List[Map[String, Any]]) = {
+		if (data != null && data.length == 3) {
+			val weaponData = data(0)
+			if (weaponData("name") != "Fists") {
+				unserializeEquip(weaponData)
+			}
+			
+			val shieldData = data(1)
+			if (shieldData("name") != "Hand") {
+				unserializeEquip(shieldData)
+			}
+			
+			val armorData = data(2)
+			if (armorData("name") != "Skin") {
+				unserializeEquip(armorData)
+			}
+		}
+	}
+	
+	def unserializeEquip(data: Map[String, Any]) = {
+		val item = ItemDatabase.byName(data("name").asInstanceOf[String]).getOrElse(null)
+		if (item != null) {
+			equip(item)
+		}
+	}
 }

@@ -5,4 +5,6 @@ class Armor(name: String, level: Int) extends Item(name, level) {
 	
 	override def itemtype = "Armor"
 	override def subinfo = s"$armor Armor"
+	
+	override def toString = s"''$name'' <:gray><0 slots><:> - ''$armor'' armor"
 }
