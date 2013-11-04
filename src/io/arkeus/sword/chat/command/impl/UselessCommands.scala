@@ -6,7 +6,7 @@ import io.arkeus.sword.chat.command.router.Parameters
 import io.arkeus.sword.user.item.ItemDatabase
 
 object UselessCommands {
-	object Look extends Command(true) {
+	object Look extends Command(Command.HIDDEN) {
 		override def execute(user: SwordUser, params: Parameters) = {
 			val direction = params.string("direction").toLowerCase()
 			if (List("west", "east", "south", "north", "left", "right", "up", "down", "back", "forward", "around").contains(direction)) {
@@ -17,7 +17,7 @@ object UselessCommands {
 		}
 	}
 	
-	object Quit extends Command(true) {
+	object Quit extends Command(Command.HIDDEN | Command.ADMIN) {
 		override def execute(user: SwordUser, params: Parameters) = {
 			System.exit(0)
 		}

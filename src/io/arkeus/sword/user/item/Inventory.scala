@@ -21,4 +21,12 @@ class Inventory {
 	def empty = size == 0
 	
 	def serialize = items.map(_.serialize).toList
+	def unserialize(data: List[Map[String, Any]]) = {
+		if (data != null) {
+			for (itemData <- data) {
+				val item = ItemDatabase.byName(itemData("name").asInstanceOf[String])
+				add(item.get)
+			}
+		}
+	}
 }

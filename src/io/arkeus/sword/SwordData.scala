@@ -19,8 +19,11 @@ object SwordData extends Logger {
 		FileUtils.write(userFile, user.serialize)
 	}
 
-	def loadUser: SwordUser = {
-		null
+	def loadUser(user: SwordUser) = {
+		val userFile = new File(usersDirectory, s"${user.name}.json")
+		if (userFile.exists()) {
+			user.unserialize(FileUtils.readFileToString(userFile))
+		}
 	}
 
 	def initialize(config: Config) = {

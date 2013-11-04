@@ -10,6 +10,7 @@ import io.arkeus.sword.chat.command.impl.UselessCommands
 import io.arkeus.sword.chat.command.impl.BattleCommands
 import io.arkeus.sword.chat.command.impl.ActivityCommands
 import io.arkeus.sword.chat.command.impl.HelpCommands
+import io.arkeus.sword.chat.command.router.Route
 
 object CommandRouter extends Logger {
 	val router = new Router(List(
@@ -49,13 +50,21 @@ object CommandRouter extends Logger {
 
 	def execute(user: SwordUser, message: String, router: Router = router) = {
 		val route = router.route(message)
-		if (route == null || route.alias == "stop" || user == null || user.idle) {
+		if (user == null || user.idle) {
 			if (route != null) {
-				val parameters = route.parameterize(message)
-				route.command.execute(user, parameters)
+				run(user, message, route)
 			} else {
 				user.send(s"Unknown command ''$message'', type ''help'' for help.")
 			}
+		} else {
+			if (route != null && route.command != null && route.command.idleable) {
+				run(user, message, route)
+			}
 		}
+	}
+	
+	private def run(user: SwordUser, message: String, route: Route) = {
+		val parameters = route.parameterize(message)
+		route.command.execute(user, parameters)
 	}
 }

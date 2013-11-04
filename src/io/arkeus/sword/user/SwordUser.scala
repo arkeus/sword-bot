@@ -101,6 +101,7 @@ class SwordUser(val name: String) extends Logger with Fightable {
 	}
 	
 	def save = SwordData.saveUser(this)
+	def load = SwordData.loadUser(this)
 	
 	def serialize = {
 		Json.build(Map(
@@ -112,6 +113,15 @@ class SwordUser(val name: String) extends Logger with Fightable {
 			"inventory" -> inventory.serialize,
 			"equipment" -> equipment.serialize
 		)).toString
+	}
+	
+	def unserialize(saved: String) = {
+		val data = Json.parse(saved).asInstanceOf[Map[String, Any]]
+		gold = data.get("gold").getOrElse(0).asInstanceOf[Int]
+		stats.unserialize(data.get("stats").getOrElse(null).asInstanceOf[Map[String, Int]])
+		experience.current = data.get("experience").getOrElse(experience.current).asInstanceOf[Int]
+		experience.level = data.get("level").getOrElse(experience.level).asInstanceOf[Int]
+		inventory.unserialize(data.get("inventory").getOrElse(null).asInstanceOf[List[Map[String, Any]]])
 	}
 
 	implicit class FormattedMessage(message: String) {

@@ -84,7 +84,7 @@ object InventoryCommands {
 		override def help = "Equips an item from your inventory"
 	}
 
-	object Debug extends Command(true) {
+	object Debug extends Command(Command.HIDDEN | Command.ADMIN) {
 		override def execute(user: SwordUser, params: Parameters) = {
 			user.inventory.add(ItemDatabase.byName("Long Sword").get)
 		}
