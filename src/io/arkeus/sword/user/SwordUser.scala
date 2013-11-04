@@ -66,10 +66,10 @@ class SwordUser(val name: String) extends Logger with Fightable {
 
 	def profile(self: Boolean) = {
 		val basicInfo = s"[$name]${if (administrator) "[<:red>admin<:>]"} [Level ${experience.level} - ${experience.current}/${experience.max}]"
-		val financeInfo = s"[Gold $gold]"
-		val statInfo = s"[STATS $stats]"
 
 		if (self) {
+			val financeInfo = s"[Gold $gold]"
+			val statInfo = s"[STATS $stats] [STATPOINTS ${stats.points(level)}]"
 			s"$basicInfo $financeInfo $statInfo"
 		} else {
 			s"$basicInfo"

@@ -60,7 +60,12 @@ class BattleActivity(user: SwordUser, args: List[Any]) extends Activity(user, ar
 	}
 
 	//override def initialize = user.send("Entering battle")
-	override def destroy = user.send(s"You leave the ${area.name} and stop exploring")
+	override def destroy = {
+		if (battle != null) {
+			user.send("You flee the battle!")
+		}
+		user.send(s"You leave the ${area.name} and stop exploring")
+	}
 	override def tickLength = 500
 
 	case object Exploring extends ActivityState

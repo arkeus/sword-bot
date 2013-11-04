@@ -3,10 +3,15 @@ package io.arkeus.sword.user
 import scala.collection.mutable.HashMap
 
 class Statistics {
-	val stats = HashMap() ++ Statistic.names.map(name => (name, 5)).toMap
+	val STARTING_VALUE = 5
+	val NUM_STATS = Statistic.names.length
+	
+	val stats = HashMap() ++ Statistic.names.map(name => (name, STARTING_VALUE)).toMap
 
 	def get(stat: String) = stats.get(stat).orElse(Some(0)).get
 	def set(stat: String, value: Int) = stats.put(stat, value)
+	
+	def points(level: Int) = (level - 1) * 2 - (stats.values.sum - (STARTING_VALUE * NUM_STATS))
 
 	def unserialize(data: Map[String, Int]) = if (data != null) data.foreach { case (key, value) => stats.put(key, value) }
 
