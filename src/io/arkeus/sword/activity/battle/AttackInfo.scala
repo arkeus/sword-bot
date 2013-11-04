@@ -18,9 +18,9 @@ class AttackInfo(val from: BattleEntity, val to: BattleEntity, val attackType: A
 			}
 		} else {
 			if (attackType == AttackType.Miss) {
-				sb.append(s"The ''${from.name}'' attacks you with its ''${attackName}'', but it misses!")
+				sb.append(s"The ''${from.name}'' attempts to attack you but misses!")
 			} else if (attackType == AttackType.Weapon) {
-				sb.append(s"The ''${from.name}'' attacks you with its ''${attackName}'' for ''${damage}'' ''${element}'' damage!")
+				sb.append(s"The ''${from.name}'' attacks you for ''${damage}'' ''${element}'' damage!")
 			} else {
 				
 			}

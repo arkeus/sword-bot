@@ -8,7 +8,6 @@ import io.arkeus.sword.user.Users
 import org.jibble.pircbot.DccChat
 import io.arkeus.sword.util.Logger
 import io.arkeus.sword.activity.battle.AreaDatabase
-import io.arkeus.sword.activity.battle.MonsterDatabase
 
 class Sword(val config: Config) extends PircBot with Logger {
 	def initialize = {
@@ -30,7 +29,6 @@ class Sword(val config: Config) extends PircBot with Logger {
 	
 	def prime = {
 		AreaDatabase.all
-		MonsterDatabase.all
 	}
 
 	override protected def onConnect = joinChannel(config.channel)
