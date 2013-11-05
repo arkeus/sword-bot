@@ -22,6 +22,14 @@ object InventoryCommands {
 		
 		override def help = "Displays all items in your inventory"
 	}
+	
+	object ShowCategory extends Command {
+		override def execute(user: SwordUser, params: Parameters) = {
+			// TODO
+		}
+		
+		override def help = "Displays a specific category of item in your inventory"
+	}
 
 	object Inspect extends Command {
 		override def execute(user: SwordUser, params: Parameters) = {
