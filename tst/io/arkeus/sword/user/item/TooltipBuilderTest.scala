@@ -11,13 +11,13 @@ import io.arkeus.sword.user.message.Colorizer
 class TooltipBuilderTest {
 	@Test
 	def minWidthTest = {
-		val item = new Weapon("Simple", 1)
+		val item = new Weapon("Simple", 1).toInventory
 		val tooltip = Colors.removeFormattingAndColors(Colorizer.colorize(new TooltipBuilder(item).build))
 		assertThat(tooltip, is("[       Simple       ]\n[ Weapon    3 Damage ]\n[ Level 1    0 Slots ]"))
 	}
 	@Test
 	def longNameTest = {
-		val item = new Weapon("Simple But Not So Simple", 1)
+		val item = new Weapon("Simple But Not So Simple", 1).toInventory
 		val tooltip = Colors.removeFormattingAndColors(Colorizer.colorize(new TooltipBuilder(item).build))
 		assertThat(tooltip, is("[ Simple But Not So Simple ]\n[ Weapon          3 Damage ]\n[ Level 1          0 Slots ]"))
 	}

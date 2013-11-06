@@ -4,7 +4,7 @@ import io.arkeus.sword.data.Element
 import io.arkeus.sword.util.Database
 
 object ItemDatabase extends Database[Item] {
-	def build(items:List[Item]) = {
+	def build(items: List[Item]) = {
 		var id = 1
 		for (item <- items) {
 			ids += item
@@ -12,7 +12,7 @@ object ItemDatabase extends Database[Item] {
 			id += 1
 		}
 	}
-	
+
 	val tiers = List("Dwarven", "Scarab", "Golem", "Dryad", "Demon", "Elven", "Titan", "Dragon", "Valkyrie")
 	val tierLevelSize = 20
 	val tierItems = tiers.map(tier => {
@@ -43,29 +43,31 @@ object ItemDatabase extends Database[Item] {
 			createTierItem[Armor](tier, "Chainmail", 6),
 			createTierItem[Armor](tier, "Splint Mail", 10),
 			createTierItem[Armor](tier, "Banded Mail", 14),
-			createTierItem[Armor](tier, "Plate Armor", 18)
-		)
+			createTierItem[Armor](tier, "Plate Armor", 18))
 	}).flatten
-	
+
 	build(List(
 		// Weapons
 		new Weapon("Wooden Stick", 1),
 		// Armor
-		
+
 		// Shields
-		
+
 		// Other
 		new Weapon("Fists", 0),
 		new Armor("Skin", 0),
 		new Shield("Hand", 0),
-		
+
 		// Enemy Weapons
-		new Weapon("Claws", 0)
-	) ++ tierItems)
-	
+		new Weapon("Claws", 0)) ++ tierItems)
+
 	private def createTierItem[T](tier: String, baseName: String, levelOffset: Int)(implicit manifest: Manifest[T]) = {
 		val level = levelOffset + tiers.indexOf(tier) * 20
 		val name = s"$tier $baseName"
 		manifest.erasure.getDeclaredConstructor(classOf[String], classOf[Int]).newInstance(name, new Integer(level)).asInstanceOf[T]
 	}
+
+	val Fists = new InventoryItem(byName("Fists").get)
+	val Skin = new InventoryItem(byName("Skin").get)
+	val Hand = new InventoryItem(byName("Hand").get)
 }

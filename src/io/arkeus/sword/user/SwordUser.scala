@@ -23,6 +23,7 @@ import com.twitter.json.Json
 import io.arkeus.sword.SwordData
 import org.jibble.pircbot.Colors
 import io.arkeus.sword.user.item.ItemDatabase
+import io.arkeus.sword.user.item.InventoryItem
 
 class SwordUser(val name: String) extends Logger with Fightable {
 	var chat: Chat = null
@@ -35,7 +36,7 @@ class SwordUser(val name: String) extends Logger with Fightable {
 	var equipment = new Equipment
 	var inventory = new Inventory
 
-	def equip(item: Item) = {
+	def equip(item: InventoryItem) = {
 		if (item != null) {
 			val removedItem = equipment.equip(item) match {
 				case Some(unequipped) =>
@@ -113,7 +114,7 @@ class SwordUser(val name: String) extends Logger with Fightable {
 	def load = SwordData.loadUser(this)
 	
 	def initialize = {
-		val stick = ItemDatabase.byName("Wooden Stick").get.asInstanceOf[Weapon]
+		val stick = ItemDatabase.byName("Wooden Stick").get.asInstanceOf[Weapon].toInventory
 		inventory.add(stick)
 		equip(stick)
 	}

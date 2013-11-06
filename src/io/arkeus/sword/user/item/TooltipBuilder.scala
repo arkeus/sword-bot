@@ -1,14 +1,17 @@
 package io.arkeus.sword.user.item
 
 import scala.collection.mutable.ListBuffer
+import io.arkeus.sword.data.Rarity
 
-class TooltipBuilder(item: Item) {
+class TooltipBuilder(inventoryItem: InventoryItem) {
+	val item = inventoryItem.item
 	val MIN_WIDTH = 22
 	val width = Math.max(MIN_WIDTH, 4 + item.name.length)
 	val lines = ListBuffer[String]()
 		
 	def build = {
-		addCentered(s"''${item.name}''")
+		val rarityColor = Rarity.toColor(inventoryItem.rarity)
+		addCentered(s"<:$rarityColor>''${item.name}''<:>")
 		add(s"${item.itemtype}", s"${item.subinfo}")
 		add(s"Level ${item.level}", s"<:gray>0 Slots<:>")
 		lines.mkString("\n")

@@ -51,7 +51,7 @@ class BattleActivity(user: SwordUser, args: List[Any]) extends Activity(user, ar
 							}
 						}
 						case item: ItemReward => {
-							user.send(s"You found a {''${item.item.name}''}!")
+							user.send(s"You found a {''${item.item}''}!")
 							user.inventory.add(item.item)
 						}
 					}

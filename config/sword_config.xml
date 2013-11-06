@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Example config file for running SwordBot -->
 <bot>
-	<nick>SwordBot</nick>
+	<nick>SwordBotZ</nick>
 	<password>password here</password>
-	<server>irc.freenode.net</server>
+	<server>moorcock.freenode.net</server>
 	<channel>#swordbot</channel>
 	<verbose>true</verbose>
-	<login>SwordBot</login>
+	<login>SwordBotZ</login>
 	<prefix>;</prefix>
 	<dataDirectory>C:\Dev\Workspace\Scala\SwordBot\data</dataDirectory>
 	<administrators>

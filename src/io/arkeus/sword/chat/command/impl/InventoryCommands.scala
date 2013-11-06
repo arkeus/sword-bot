@@ -6,16 +6,17 @@ import io.arkeus.sword.chat.command.router.Parameters
 import io.arkeus.sword.user.item.ItemDatabase
 import org.jibble.pircbot.Colors
 import io.arkeus.sword.user.item.ItemInspector
+import io.arkeus.sword.user.item.Equipment
 
 object InventoryCommands {
+	val PAGE_SIZE = 25
+	
 	object Show extends Command {
-		val PAGE_SIZE = 25
-		
 		override def execute(user: SwordUser, params: Parameters) = {
 			if (user.inventory.empty) {
 				user.send("Your inventory is currently empty")
 			} else {
-				val inventory = user.inventory.all.zipWithIndex.map((zipped) => s"[${zipped._2 + 1}] ${zipped._1.name} <:gray>(${zipped._1.shortinfo})<:>").grouped(PAGE_SIZE).map(_.mkString(" ")).mkString("\n")
+				val inventory = user.inventory.all.zipWithIndex.map((zipped) => s"[${zipped._2 + 1}] ${zipped._1} <:gray>(${zipped._1.item.shortinfo})<:>").grouped(PAGE_SIZE).map(_.mkString(" ")).mkString("\n")
 				user.send(s"[Inventory ${user.inventory.size} items] Use ''inventory ID'' to inspect an item.\n$inventory")
 			}
 		}
@@ -25,7 +26,13 @@ object InventoryCommands {
 	
 	object ShowCategory extends Command {
 		override def execute(user: SwordUser, params: Parameters) = {
-			// TODO
+			val category = params.string("type").toLowerCase()
+			if (!Equipment.SLOTS.contains(category)) {
+				user.send(s"Invalid type. Valid types are: " + Equipment.SLOTS.mkString(" "))
+			} else {
+				val inventory = user.inventory.all.zipWithIndex.filter((zipped) => zipped._1.item.itemtype.toLowerCase() == category).map((zipped) => s"[${zipped._2 + 1}] ${zipped._1} <:gray>(${zipped._1.item.shortinfo})<:>").grouped(PAGE_SIZE).map(_.mkString(" ")).mkString("\n")
+				user.send(s"[Inventory ${category}s] Use ''inventory ID'' to inspect an item.\n$inventory")
+			}
 		}
 		
 		override def help = "Displays a specific category of item in your inventory"
@@ -94,7 +101,13 @@ object InventoryCommands {
 
 	object Debug extends Command(Command.HIDDEN | Command.ADMIN) {
 		override def execute(user: SwordUser, params: Parameters) = {
-			user.inventory.add(ItemDatabase.byName("Dwarven Short Sword").get)
+			user.inventory.add(ItemDatabase.byName("Dwarven Short Sword").get.toInventory)
+		}
+	}
+
+	object Reset extends Command(Command.HIDDEN | Command.ADMIN) {
+		override def execute(user: SwordUser, params: Parameters) = {
+			user.inventory.reset
 		}
 	}
 }
