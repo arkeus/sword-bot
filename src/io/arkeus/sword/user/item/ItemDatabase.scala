@@ -2,6 +2,7 @@ package io.arkeus.sword.user.item
 
 import io.arkeus.sword.data.Element
 import io.arkeus.sword.util.Database
+import scala.collection.immutable.Map
 
 object ItemDatabase extends Database[Item] {
 	def build(items: List[Item]) = {
@@ -61,10 +62,16 @@ object ItemDatabase extends Database[Item] {
 		// Enemy Weapons
 		new Weapon("Claws", 0)) ++ tierItems)
 
-	private def createTierItem[T](tier: String, baseName: String, levelOffset: Int)(implicit manifest: Manifest[T]) = {
+	private def createTierItem[T](tier: String, baseName: String, levelOffset: Int)(implicit manifest: Manifest[T]): T = {
+		createTierItem(tier, baseName, levelOffset, Map[String, Double]())
+	}
+	
+	private def createTierItem[T](tier: String, baseName: String, levelOffset: Int, properties: Map[String, Double])(implicit manifest: Manifest[T]): T = {
 		val level = levelOffset + tiers.indexOf(tier) * 20
 		val name = s"$tier $baseName"
-		manifest.erasure.getDeclaredConstructor(classOf[String], classOf[Int]).newInstance(name, new Integer(level)).asInstanceOf[T]
+		println(manifest.erasure.getDeclaredConstructors()(0).toString())
+		println(manifest.erasure.getDeclaredConstructor(classOf[String], classOf[Int], classOf[Map[String, Double]]))
+		manifest.erasure.getDeclaredConstructor(classOf[String], classOf[Int], classOf[Map[String, Double]]).newInstance(name, new Integer(level), properties).asInstanceOf[T]
 	}
 
 	val Fists = new InventoryItem(byName("Fists").get)

@@ -1,13 +1,16 @@
 package io.arkeus.sword.user.item
 
-import io.arkeus.sword.data.Rarity
 import io.arkeus.sword.data.Element
+import io.arkeus.sword.data.Rarity
 
 class InventoryItem(val item: Item) {
 	var prefix: Affix = null
 	var suffix: Affix = null
 
 	def name = s"${if (prefix != null) prefix.name + " " else ""}${item.name}${if (suffix != null) " " + suffix.name else ""}"
+	
+	def keys = PropertyContainer.keyset(prefix, suffix, item)
+	def stat(name: String) = (item.stat(name) + Affix.stat(name, item.level, prefix) + Affix.stat(name, item.level, suffix)).ceil.toInt
 
 	def damage = item match {
 		case weapon: Weapon => weapon.damage

@@ -82,8 +82,6 @@ class ConfigReader(val configFile: File) {
 			}
 		}
 		
-		println("ADMINS: " + set)
-		
 		new Administrators(set)
 	}
 }

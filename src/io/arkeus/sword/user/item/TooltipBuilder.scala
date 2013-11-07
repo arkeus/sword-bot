@@ -14,6 +14,11 @@ class TooltipBuilder(inventoryItem: InventoryItem) {
 		addCentered(s"<:$rarityColor>''${item.name}''<:>")
 		add(s"${item.itemtype}", s"${item.subinfo}")
 		add(s"Level ${item.level}", s"<:gray>0 Slots<:>")
+		
+		for (key <- inventoryItem.keys) {
+			add(s"+''${inventoryItem.stat(key)}'' $key")
+		}
+		
 		lines.mkString("\n")
 	}
 	

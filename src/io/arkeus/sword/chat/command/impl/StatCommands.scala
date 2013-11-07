@@ -52,5 +52,5 @@ object StatCommands {
 		}
 	}
 	
-	def resetCost(level: Int) = 10 + level * 2
+	def resetCost(level: Int) = 1 // 10 + level * 2
 }

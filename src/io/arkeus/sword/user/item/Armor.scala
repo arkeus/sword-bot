@@ -1,6 +1,6 @@
 package io.arkeus.sword.user.item
 
-class Armor(name: String, level: Int) extends Item(name, level) {
+class Armor(name: String, level: Int, properties: Map[String, Double] = null) extends Item(name, level, properties) {
 	val armor = Armor.armor(level)
 	
 	override def itemtype = "Armor"
@@ -11,5 +11,5 @@ class Armor(name: String, level: Int) extends Item(name, level) {
 }
 
 object Armor {
-	def armor = (level: Int) => level * 2
+	def armor = (level: Int) => 4 + level * 2
 }

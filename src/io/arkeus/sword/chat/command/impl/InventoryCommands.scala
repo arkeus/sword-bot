@@ -16,7 +16,7 @@ object InventoryCommands {
 			if (user.inventory.empty) {
 				user.send("Your inventory is currently empty")
 			} else {
-				val inventory = user.inventory.all.zipWithIndex.map((zipped) => s"[${zipped._2 + 1}] ${zipped._1} <:gray>(${zipped._1.item.shortinfo})<:>").grouped(PAGE_SIZE).map(_.mkString(" ")).mkString("\n")
+				val inventory = user.inventory.all.zipWithIndex.map((zipped) => s"[${zipped._2 + 1}] ${zipped._1} <:gray>(Lv ${zipped._1.item.level})<:>").grouped(PAGE_SIZE).map(_.mkString(" ")).mkString("\n")
 				user.send(s"[Inventory ${user.inventory.size} items] Use ''inventory ID'' to inspect an item.\n$inventory")
 			}
 		}
@@ -30,7 +30,7 @@ object InventoryCommands {
 			if (!Equipment.SLOTS.contains(category)) {
 				user.send(s"Invalid type. Valid types are: " + Equipment.SLOTS.mkString(" "))
 			} else {
-				val inventory = user.inventory.all.zipWithIndex.filter((zipped) => zipped._1.item.itemtype.toLowerCase() == category).map((zipped) => s"[${zipped._2 + 1}] ${zipped._1} <:gray>(${zipped._1.item.shortinfo})<:>").grouped(PAGE_SIZE).map(_.mkString(" ")).mkString("\n")
+				val inventory = user.inventory.all.zipWithIndex.filter((zipped) => zipped._1.item.itemtype.toLowerCase() == category).map((zipped) => s"[${zipped._2 + 1}] ${zipped._1} <:gray>(Lv ${zipped._1.item.level})<:>").grouped(PAGE_SIZE).map(_.mkString(" ")).mkString("\n")
 				user.send(s"[Inventory ${category}s] Use ''inventory ID'' to inspect an item.\n$inventory")
 			}
 		}
@@ -55,9 +55,9 @@ object InventoryCommands {
 	object Equipped extends Command {
 		override def execute(user: SwordUser, params: Parameters) = {
 			user.send("{''Equipped Items''} {Use ''equipped type'' (eg: ''equipped shield'') to inspect an item}")
-			user.send("[Weapon] " + (if (user.equipment.hasWeapon) user.equipment.weapon else s"None (${user.equipment.weapon})"))
-			user.send("[Shield] " + (if (user.equipment.hasShield) user.equipment.shield else s"None (${user.equipment.shield})"))
-			user.send(" [Armor] " + (if (user.equipment.hasArmor) user.equipment.armor else s"None (${user.equipment.armor})"))
+			user.send("[Weapon] " + (if (user.equipment.hasWeapon) s"${user.equipment.weapon} - ${user.equipment.weapon.damage} Damage" else s"None (${user.equipment.weapon})"))
+			user.send("[Shield] " + (if (user.equipment.hasShield) s"${user.equipment.shield} - ${user.equipment.weapon.armor} Armor" else s"None (${user.equipment.shield})"))
+			user.send(" [Armor] " + (if (user.equipment.hasArmor) s"${user.equipment.armor} - ${user.equipment.weapon.armor} Armor" else s"None (${user.equipment.armor})"))
 		}
 		
 		override def help = "Displays your equipped items"

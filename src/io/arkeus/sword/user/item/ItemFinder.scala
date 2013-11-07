@@ -26,7 +26,6 @@ object ItemFinder {
 		} else {
 			val rarity = if (Math.random() < COMMON_AFFIX_CHANCE) Rarity.Common else Rarity.Rare
 			val affixes = AffixDatabase.find(rarity, category)
-			println("\n\nFOUND " + affixes.length + " ITEMS WITH RARITY " + rarity + " AND CATEGORY " + category)
 			if (affixes.length > 0) {
 				affixes(RandomUtils.random(0, affixes.length - 1))
 			} else {

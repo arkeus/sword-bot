@@ -15,4 +15,19 @@ class InventoryItemTest {
 		val item = ItemDatabase.byName("Dwarven Short Sword").get.toInventory.withPrefix(prefix).withSuffix(suffix)
 		assertThat(Colorizer.colorize(item.toString), is(Colors.BLUE + "Potent Dwarven Short Sword of Strength" + Colors.NORMAL))
 	}
+	
+	@Test
+	def testKeys = {
+		val item = ItemDatabase.byName("Dwarven Short Sword").get.toInventory
+		assertThat(item.keys, is(Set[String]()))
+		assertThat(item.stat("Strength"), is(0))
+		
+		val prefix = AffixDatabase.byName("Potent").get
+		val suffix = AffixDatabase.byName("of Defense").get
+		val itemMods = ItemDatabase.byName("Dwarven Short Dagger").get.toInventory.withPrefix(prefix).withSuffix(suffix)
+		assertThat(itemMods.keys, is(Set[String]("Strength", "Defense")))
+		assertThat(itemMods.stat("Strength"), is(2))
+		assertThat(itemMods.stat("Defense"), is(2))
+		assertThat(itemMods.stat("Wisdom"), is(0))
+	}
 }

@@ -21,9 +21,9 @@ class BattleEntity(source:Fightable) {
 	val stamina = source.stat("stamina")
 	val spirit = source.stat("spirit")
 	
+	val weapon = source.weapon
 	val damage = source.damage
 	val armor = source.armor
-	val weapon = source.weapon
 	
 	def dead = hp <= 0
 	
@@ -41,9 +41,9 @@ class BattleEntity(source:Fightable) {
 		val offensive = if (attackType == "weapon") source.strength else source.wisdom
 		val defensive = target.defense
 		
-		val difference = (offensive - defensive) / 100
-		val staticBonus = (offensive / 9).floor
-		val staticDefense = defensive / 3
+		val difference = (offensive - defensive) / 25
+		val staticBonus = offensive / 2
+		val staticDefense = defensive / 2
 		
 		var dmg = Math.max(1, source.damage.toDouble + staticBonus - staticDefense)
 		if (difference > 0) {
