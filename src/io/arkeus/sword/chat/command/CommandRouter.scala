@@ -45,6 +45,13 @@ object CommandRouter extends Logger {
 		("look $direction:String", UselessCommands.Look),
 		// Debug
 		("quit", UselessCommands.Quit)
+	), Map(
+		"i" -> "inventory",
+		"inv" -> "inventory",
+		"s" -> "stats",
+		"u" -> "user",
+		"e" -> "equipped",
+		"b" -> "battle"
 	))
 	
 	def aliases = router.aliases
@@ -62,7 +69,7 @@ object CommandRouter extends Logger {
 		if (user == null || user.idle) {
 			if (route != null) {
 				run(user, message, route)
-			} else {
+			} else if (user != null) {
 				user.send(s"Unknown command ''$message'', type ''help'' for help.")
 			}
 		} else {

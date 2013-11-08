@@ -6,7 +6,7 @@ import scala.collection.mutable.ListBuffer
 import io.arkeus.sword.chat.command.router.RouteHelper._
 import io.arkeus.sword.user.SwordUser
 
-class Router(val routeList: List[Any]) {
+class Router(val routeList: List[Any], val shortcuts: Map[String, String]) {
 	val routes = build
 
 	def aliases = routes.keys.toList.filter(alias => routes(alias).count(route => route.command != null && !route.command.hidden) > 0)
@@ -14,12 +14,23 @@ class Router(val routeList: List[Any]) {
 	def where(alias: String) = routes.get(alias) match { case Some(routes) => routes.filter(!_.command.hidden) case None => null }
 
 	def route(path: String) = {
-		routes.get(path.alias) match {
+		val truePath = mapShortcuts(path)
+		routes.get(truePath.alias) match {
 			case Some(list) => {
-				val sortedRoutes = list.filter(_.matches(path)).sortWith(_.score > _.score)
+				val sortedRoutes = list.filter(_.matches(truePath)).sortWith(_.score > _.score)
 				if (sortedRoutes.length > 0) sortedRoutes(0) else null
 			}
 			case None => null
+		}
+	}
+	
+	def mapShortcuts(path: String) = {
+		val alias = path.alias
+		val tokens = path.tokenize
+		if (shortcuts.contains(alias)) {
+			(Array(shortcuts(alias)) ++ tokens.drop(1)).mkString(" ")
+		} else {
+			path
 		}
 	}
 

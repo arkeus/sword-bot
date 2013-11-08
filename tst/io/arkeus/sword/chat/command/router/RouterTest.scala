@@ -15,7 +15,7 @@ class RouterTest extends BaseTest {
 			("buy $num:Int $item-id:Int", TestBuyCommand),
 			("buy $num:Int $item:String", TestBuyCommand),
 			("profile $user:String", TestProfileCommand)
-		))
+		), Map[String, String]())
 
 		val buyParams = CommandRouter.execute(null, "buy 1 sword", router).asInstanceOf[Parameters]
 		assertThat(buyParams.int("num"), is(1))
@@ -37,7 +37,7 @@ class RouterTest extends BaseTest {
 		val router = new Router(List(
 			("buy $num:Int $item:String", TestBuyCommand),
 			("buy $num:Int $item-id:Int", TestBuyCommand)
-		))
+		), Map[String, String]())
 
 		val buyIntParams = CommandRouter.execute(null, "buy 1 5", router).asInstanceOf[Parameters]
 		intercept[NoSuchElementException]("ints can be parsed as string, so that route matches and gets precendence") {
@@ -45,6 +45,22 @@ class RouterTest extends BaseTest {
 		}
 		assertThat(buyIntParams.string("item"), is("5"))
 		assertThat(buyIntParams.int("num"), is(1))
+	}
+	
+	@Test
+	def commandRouterShortcutTest = {
+		val router = new Router(List(
+			("buy $num:Int $item:String", TestBuyCommand),
+			("buy $num:Int $item-id:Int", TestBuyCommand)
+		), Map(
+			"b" -> "buy",
+			"bu" -> "buy"
+		))
+
+		assertThat(CommandRouter.execute(null, "buy 1 5", router).isInstanceOf[Parameters], is(true))
+		assertThat(CommandRouter.execute(null, "bu 1 5", router).isInstanceOf[Parameters], is(true))
+		assertThat(CommandRouter.execute(null, "b 1 5", router).isInstanceOf[Parameters], is(true))
+		assertThat(CommandRouter.execute(null, "uy 1 5", router).isInstanceOf[Parameters], is(false))
 	}
 
 	object TestBuyCommand extends Command {
