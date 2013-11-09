@@ -34,10 +34,10 @@ object ItemDatabase extends Database[Item] {
 			// Tier Shields
 			createTierItem[Shield](tier, "Buckler", 1),
 			createTierItem[Shield](tier, "Targe Shield", 3),
-			createTierItem[Shield](tier, "Heater Shield", 6),
-			createTierItem[Shield](tier, "Kite Shield", 10),
-			createTierItem[Shield](tier, "Tower Shield", 14),
-			createTierItem[Shield](tier, "Aegis", 18),
+			createTierItem[Shield](tier, "Heater Shield", 5),
+			createTierItem[Shield](tier, "Kite Shield", 9),
+			createTierItem[Shield](tier, "Tower Shield", 13),
+			createTierItem[Shield](tier, "Aegis", 17),
 			// Tier Armors
 			createTierItem[Armor](tier, "Ring Mail", 1),
 			createTierItem[Armor](tier, "Scale Mail", 3),
