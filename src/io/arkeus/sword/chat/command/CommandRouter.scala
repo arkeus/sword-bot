@@ -51,6 +51,7 @@ object CommandRouter extends Logger {
 		"s" -> "stats",
 		"u" -> "user",
 		"e" -> "equipped",
+		"eq" -> "equipped",
 		"b" -> "battle"
 	))
 	
