@@ -75,7 +75,8 @@ class SwordUser(val name: String) extends Logger with Fightable {
 
 		if (self) {
 			val financeInfo = s"[Gold $gold]"
-			val statInfo = s"[Stats $stats] {''Stat Points'' ${stats.points(level)}}"
+			val statProfile = Statistic.names.map(name => s"''${Statistic.shorten(name)}'' ${stat(name)}").mkString(" | ")
+			val statInfo = s"[Stats $statProfile] {''Stat Points'' ${stats.points(level)}}"
 			s"$basicInfo $financeInfo $statInfo"
 		} else {
 			s"$basicInfo"
