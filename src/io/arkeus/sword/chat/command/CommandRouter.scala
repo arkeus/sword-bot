@@ -27,6 +27,8 @@ object CommandRouter extends Logger {
 		// Inventory
 		("inventory $id:Int", InventoryCommands.Inspect),
 		("inventory $type:String", InventoryCommands.ShowCategory),
+		("inventory sell $id:Int", InventoryCommands.Sell),
+		("inventory sell all", InventoryCommands.SellAll),
 		("inventory gimme", InventoryCommands.Debug),
 		("inventory reset", InventoryCommands.Reset),
 		("inventory", InventoryCommands.Show),

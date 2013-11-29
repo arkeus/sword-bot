@@ -3,7 +3,7 @@
 <bot>
 	<nick>SwordBotZ</nick>
 	<password>password here</password>
-	<server>moorcock.freenode.net</server>
+	<server>irc.freenode.net</server>
 	<channel>#swordbot</channel>
 	<verbose>true</verbose>
 	<login>SwordBotZ</login>

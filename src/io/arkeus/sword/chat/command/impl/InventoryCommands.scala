@@ -52,6 +52,34 @@ object InventoryCommands {
 		override def help = "Displays in depth information about a single item in your inventory"
 	}
 	
+	object Sell extends Command {
+		override def execute(user: SwordUser, params: Parameters) = {
+			var id = params.int("id")
+			if (id < 1 || id > user.inventory.size) {
+				user.send(s"Invalid id ''$id'', use ''inventory'' command to view ids of items you own.")
+			} else {
+				val item = user.inventory.get(id - 1)
+				user.inventory.remove(id - 1)
+				user.send(s"You've successfully sold your ${item}.")
+			}
+		}
+		
+		override def help = "Sells a single item from your inventory"
+	}
+	
+	object SellAll extends Command {
+		override def execute(user: SwordUser, params: Parameters) = {
+			if (user.inventory.size < 1) {
+				user.send("You have no items to sell")
+			} else {
+				user.inventory.reset
+				user.send(s"You've successfully sold all items in your inventory.")
+			}
+		}
+		
+		override def help = "Sells all items in your inventory"
+	}
+	
 	object Equipped extends Command {
 		override def execute(user: SwordUser, params: Parameters) = {
 			user.send("{''Equipped Items''} {Use ''equipped type'' (eg: ''equipped shield'') to inspect an item}")
